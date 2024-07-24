@@ -1,5 +1,6 @@
 export default defineEventHandler(async (event) => {
-    return {
-      memoria: await prisma.memoria.findFirst(),
-    };
-  });
+    const memoria = await prisma.memoria_list.findMany({
+        take: 10
+      })
+    return memoria;
+})

@@ -15,9 +15,17 @@ import Tooltip from 'primevue/tooltip';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 
+import Aura from '@primevue/themes/aura';
+
 export default defineNuxtPlugin((nuxtApp) => {
     //console.log(useRuntimeConfig().public.siteKey)
-    nuxtApp.vueApp.use(PrimeVue, { ripple: true });
+    nuxtApp.vueApp.use(PrimeVue, {
+        ripple: true,
+        theme: {
+            preset: Aura
+        }
+    });
+
     nuxtApp.vueApp.component("DataTable", DataTable);
     nuxtApp.vueApp.component("Column", Column);
     nuxtApp.vueApp.component("InputText", InputText);

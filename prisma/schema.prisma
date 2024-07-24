@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -83,4 +84,23 @@ model unique_memoria {
   cn_name   String? @db.VarChar(100)
   kr_name   String? @db.VarChar(100)
   tw_name   String? @db.VarChar(100)
+}
+
+view memoria_list {
+  unique_id    Int?
+  card_mst_id  Int     @id
+  name         String? @db.VarChar(100)
+  rarity       Int?    @db.SmallInt
+  card_type    Int?    @db.SmallInt
+  attribute    Int?    @db.SmallInt
+  quest_sk     String? @db.VarChar
+  quest_desc   String? @db.VarChar
+  gvg_sk       String? @db.VarChar
+  gvg_desc     String? @db.VarChar
+  auto_sk      String? @db.VarChar
+  support_desc String? @db.VarChar
+  max_phys_atk Int?
+  max_phys_def Int?
+  max_mag_atk  Int?
+  max_mag_def  Int?
 }

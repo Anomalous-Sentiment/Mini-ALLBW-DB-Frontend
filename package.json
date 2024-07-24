@@ -10,15 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@primevue/themes": "^4.0.1",
     "@prisma/nuxt": "^0.0.30",
-    "msgpackr": "^1.11.0",
-    "nuxt": "^3.12.4",
     "primevue": "^4.0.1",
     "vue": "latest"
   },
   "devDependencies": {
-    "@primevue/nuxt-module": "^4.0.1",
     "@prisma/client": "^5.17.0",
+    "nuxt": "^3.12.4",
     "prisma": "^5.17.0"
   }
 }
