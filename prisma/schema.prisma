@@ -1,14 +1,86 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model card_types {
+  card_type      Int     @id @db.SmallInt
+  card_type_name String? @db.VarChar
+}
+
+model memoria {
+  card_mst_id              Int      @id
+  unique_id                Int?
+  card_type                Int?     @db.SmallInt
+  rarity                   Int?     @db.SmallInt
+  attribute                Int?     @db.SmallInt
+  quest_skill_mst_id       Int?
+  gvg_skill_mst_id         Int?
+  gvg_auto_skill_mst_id    Int?
+  limit_break_bonus_mst_id Int?
+  base_phys_atk            Int?
+  base_phys_def            Int?
+  base_mag_atk             Int?
+  base_mag_def             Int?
+  max_phys_atk             Int?
+  max_phys_def             Int?
+  max_mag_atk              Int?
+  max_mag_def              Int?
+  deck_cost                Int?     @db.SmallInt
+  is_emoria                Boolean?
+}
+
+model skill_types {
+  skill_type      Int     @id @db.SmallInt
+  skill_type_desc String? @db.VarChar
+}
+
+model skills {
+  skill_mst_id                            Int     @id
+  jp_name                                 String? @db.VarChar
+  en_name                                 String? @db.VarChar
+  cn_name                                 String? @db.VarChar
+  kr_name                                 String? @db.VarChar
+  tw_name                                 String? @db.VarChar
+  jp_description                          String? @db.VarChar
+  en_description                          String? @db.VarChar
+  cn_description                          String? @db.VarChar
+  kr_description                          String? @db.VarChar
+  tw_description                          String? @db.VarChar
+  sp                                      Int?    @db.SmallInt
+  min_range                               Int?    @db.SmallInt
+  max_range                               Int?    @db.SmallInt
+  skill_type                              Int?    @db.SmallInt
+  effect_time                             Int?    @db.SmallInt
+  attack_type                             Int?    @db.SmallInt
+  target_num_min                          Int?    @db.SmallInt
+  target_num_max                          Int?    @db.SmallInt
+  attack_magnification                    Float?  @db.Real
+  attack_up_magnification                 Float?  @db.Real
+  buffer_magical_attack_magnification     Float?  @db.Real
+  buffer_magical_defense_magnification    Float?  @db.Real
+  buffer_physical_attack_magnification    Float?  @db.Real
+  buffer_physical_defense_magnification   Float?  @db.Real
+  debuffer_magical_attack_magnification   Float?  @db.Real
+  debuffer_magical_defense_magnification  Float?  @db.Real
+  debuffer_physical_attack_magnification  Float?  @db.Real
+  debuffer_physical_defense_magnification Float?  @db.Real
+  buffer_up_magnification                 Float?  @db.Real
+  recovery_magnification                  Float?  @db.Real
+  recovery_up_magnification               Float?  @db.Real
+  use_sp_reduce_magnification             Float?  @db.Real
+}
+
+model unique_memoria {
+  unique_id Int     @id
+  jp_name   String? @db.VarChar(100)
+  en_name   String? @db.VarChar(100)
+  cn_name   String? @db.VarChar(100)
+  kr_name   String? @db.VarChar(100)
+  tw_name   String? @db.VarChar(100)
 }
