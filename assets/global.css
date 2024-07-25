@@ -1,0 +1,35 @@
+/*
+.p-datatable-header-cell {
+    background: #161d21 !important;
+
+}
+
+.p-datatable .p-datatable-tbody>tr {
+    background: #161d21;
+}
+
+.p-datatable .p-datatable-tbody>tr>td {
+    border: solid #263238;
+    padding: .2rem;
+    border-width: 0 0 2px;
+}
+
+.p-paginator {
+    background: #161d21 !important;
+    border: 2px solid #263238;
+    border-radius: 6px;
+    color: #fff9;
+    padding: .5rem 1rem;
+}
+*/
+:root {
+    --p-datatable-header-background: #161d21;
+    --p-datatable-header-cell-background: #161d21;
+}
+
+* {
+
+    font-family: sans-serif;
+ }
+
+ 

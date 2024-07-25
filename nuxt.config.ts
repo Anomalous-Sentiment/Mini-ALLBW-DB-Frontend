@@ -4,10 +4,8 @@ import Aura from '@primevue/themes/aura';
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: [
-    "@prisma/nuxt",
-    // '@primevue/nuxt-module'
-  ],
+  modules: [// '@primevue/nuxt-module'
+  "@prisma/nuxt"],
   primevue: {
     options: {
         theme: {
@@ -17,5 +15,11 @@ export default defineNuxtConfig({
   },
   components: {
     global: true
+  },
+  css: [
+    '@/assets/global.css',
+  ],
+  image: {
+    // Options
   }
 })

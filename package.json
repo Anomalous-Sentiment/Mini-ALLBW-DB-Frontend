@@ -16,6 +16,7 @@
     "vue": "latest"
   },
   "devDependencies": {
+    "@nuxt/image": "^1.7.0",
     "@prisma/client": "^5.17.0",
     "nuxt": "^3.12.4",
     "prisma": "^5.17.0"

@@ -1,5 +1,8 @@
 <template>
     <div>
+        
+        <Button label="Toggle Color Scheme" @click="toggleColorScheme()" />
+
         <Message severity="warn">This is a work-in-progress</Message>
       <DataTable v-model:filters="filters" :value="memoriaList" paginator :rows="100" dataKey="card_mst_id" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -18,14 +21,17 @@
         </Column>
         <Column field="card_mst_id" header="Icon">
             <template #body="{ data }">
-                {{ data['card_mst_id'] }}
+                <img :src="`/img/memoria/CardIconS0${data['unique_id']}.png`" alt="Icon" height="64px"/>
             </template>
         </Column>
         <Column field="name" header="Name" :show-filter-menu="false">
             <template #body="{ data }">
-                <NuxtLink :to="`/memoria/${data['unique_id']}`">
+                <NuxtLink :to="`/card/${data['unique_id']}`">
                     {{ data['name'] }}
                 </NuxtLink>
+            </template>
+            <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
         <Column field="card_type" header="Type" :show-filter-menu="false" style="min-width: 8rem">
@@ -83,10 +89,11 @@
     const nf = new Intl.NumberFormat();
     const filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        'name': { value: null, matchMode: FilterMatchMode.CONTAINS },
+        'name': { value: null, matchMode: FilterMatchMode.EQUALS },
         'attribute': { value: null, matchMode: FilterMatchMode.EQUALS },
         'card_type': { value: null, matchMode: FilterMatchMode.EQUALS },
     }
+
     const { data: memoriaList, status: statusString } = await useAsyncData('memoria', () => getMemoria())
 
     const loading = computed(() => {
@@ -102,4 +109,36 @@
         const data = await $fetch('/api/memoria')
         return data
     }
+    
+    function toggleColorScheme() {
+        const element = document.querySelector('html');
+        element.classList.toggle('app-dark-mode');
+    }
+
 </script>
+
+<style scoped>
+:deep(.p-datatable .p-datatable-tbody > tr > td) {
+  padding: 0.2rem;
+}
+:deep(.p-datatable .p-datatable-thead > tr > th){
+  padding: 1px;
+}
+
+:deep(.p-paginator) {
+  padding: 0;
+}
+
+:deep(.p-multiselect .p-multiselect-trigger) {
+    width: 10px;
+}
+
+:deep(.p-message) {
+    margin: 0rem;
+}
+/*
+:deep(.p-message .p-message-wrapper) {
+    padding: 0.5rem 1rem;
+}
+*/
+</style>
