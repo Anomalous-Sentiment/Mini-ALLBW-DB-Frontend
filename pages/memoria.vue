@@ -34,9 +34,14 @@
                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name"/>
             </template>
         </Column>
-        <Column field="card_type" header="Type" :show-filter-menu="false" style="min-width: 8rem">
+        <Column field="card_type" header="Type" :show-filter-menu="false">
             <template #body="{ data }">
                 {{ data['card_type'] }}
+            </template>
+        </Column>
+        <Column field="rarity" header="Rarity" :showFilterMenu="false" >
+            <template #body="{ data }">
+                {{ data["rarity"] }}
             </template>
         </Column>
         <Column field="attribute" header="Attribute" filterField="attribute" :showFilterMenu="false" >
@@ -66,17 +71,29 @@
         </Column>
         <Column field="quest_sk" header="Huge Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
-                {{ data['quest_sk'] }}
+                <img :src="`/img/icons/quest_icon.png`" alt="Quest Icon" height="16px"/>
+                {{ ' ' }}
+                <b>{{ data['quest_sk'] }}</b>
+                <Divider/>
+                {{ data['quest_desc'] }}
             </template>
         </Column>
         <Column field="gvg_sk" header="Legion Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
-                {{ data['gvg_sk'] }}
+                <img :src="`/img/icons/gvg_icon.png`" alt="GvG Icon" height="16px"/>
+                {{ ' ' }}
+                <b>{{ data['gvg_sk'] }}</b>
+                <Divider/>
+                {{ data['gvg_desc'] }}
             </template>
         </Column>
-        <Column field="Median_Member_HP" header="Legion Support Skill" sortable style="min-width: 8rem">
+        <Column field="auto_sk" header="Legion Support Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
-                {{ data['auto_sk'] }}
+                <img :src="`/img/icons/gvg_support_icon.png`" alt="GvG Support Icon" height="16px"/>
+                {{ ' ' }}
+                <b>{{ data['auto_sk'] }}</b>
+                <Divider/>
+                {{ data['support_desc'] }}
             </template>
         </Column>
       </DataTable>
