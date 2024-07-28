@@ -15,25 +15,36 @@ model card_types {
 }
 
 model memoria {
-  card_mst_id              Int      @id
-  unique_id                Int?
-  card_type                Int?     @db.SmallInt
-  rarity                   Int?     @db.SmallInt
-  attribute                Int?     @db.SmallInt
-  quest_skill_mst_id       Int?
-  gvg_skill_mst_id         Int?
-  gvg_auto_skill_mst_id    Int?
-  limit_break_bonus_mst_id Int?
-  base_phys_atk            Int?
-  base_phys_def            Int?
-  base_mag_atk             Int?
-  base_mag_def             Int?
-  max_phys_atk             Int?
-  max_phys_def             Int?
-  max_mag_atk              Int?
-  max_mag_def              Int?
-  deck_cost                Int?     @db.SmallInt
-  is_emoria                Boolean?
+  card_mst_id                      Int      @id
+  unique_id                        Int?
+  card_type                        Int?     @db.SmallInt
+  rarity                           Int?     @db.SmallInt
+  attribute                        Int?     @db.SmallInt
+  quest_skill_mst_id               Int?
+  gvg_skill_mst_id                 Int?
+  gvg_auto_skill_mst_id            Int?
+  limit_break_bonus_mst_id         Int?
+  base_phys_atk                    Int?
+  base_phys_def                    Int?
+  base_mag_atk                     Int?
+  base_mag_def                     Int?
+  max_phys_atk                     Int?
+  max_phys_def                     Int?
+  max_mag_atk                      Int?
+  max_mag_def                      Int?
+  deck_cost                        Int?     @db.SmallInt
+  is_emoria                        Boolean?
+  awakened_card_type               Int?
+  awaken_add_phys_atk              Int?
+  awaken_add_mag_atk               Int?
+  awaken_add_phys_def              Int?
+  awaken_add_mag_def               Int?
+  awaken_quest_skill_mst_id        Int?
+  awaken_gvg_skill_mst_id          Int?
+  awaken_gvg_auto_skill_mst_id     Int?
+  new_awaken_quest_skill_mst_id    Int?
+  new_awaken_gvg_skill_mst_id      Int?
+  new_awaken_gvg_auto_skill_mst_id Int?
 }
 
 model skill_types {
@@ -71,8 +82,8 @@ model skills {
   debuffer_magical_defense_magnification  Float?  @db.Real
   debuffer_physical_attack_magnification  Float?  @db.Real
   debuffer_physical_defense_magnification Float?  @db.Real
-  buffer_up_magnification                 Float?  @db.Real
   recovery_magnification                  Float?  @db.Real
+  buffer_up_magnification                 Float?  @db.Real
   recovery_up_magnification               Float?  @db.Real
   use_sp_reduce_magnification             Float?  @db.Real
 }
@@ -84,6 +95,25 @@ model unique_memoria {
   cn_name   String? @db.VarChar(100)
   kr_name   String? @db.VarChar(100)
   tw_name   String? @db.VarChar(100)
+}
+
+model super_awakened_memoria {
+  card_mst_id              Int
+  card_type                Int  @db.SmallInt
+  quest_skill_mst_id       Int?
+  gvg_skill_mst_id         Int?
+  gvg_auto_skill_mst_id    Int?
+  limit_break_bonus_mst_id Int?
+  base_phys_atk            Int?
+  base_phys_def            Int?
+  base_mag_atk             Int?
+  base_mag_def             Int?
+  max_phys_atk             Int?
+  max_phys_def             Int?
+  max_mag_atk              Int?
+  max_mag_def              Int?
+
+  @@id([card_mst_id, card_type])
 }
 
 view memoria_list {
@@ -103,4 +133,133 @@ view memoria_list {
   max_phys_def Int?
   max_mag_atk  Int?
   max_mag_def  Int?
+}
+
+view gvg_magnification {
+  unique_id                               Int?
+  skill_mst_id                            Int    @id
+  attack_magnification                    Float? @db.Real
+  buffer_magical_attack_magnification     Float? @db.Real
+  buffer_magical_defense_magnification    Float? @db.Real
+  buffer_physical_attack_magnification    Float? @db.Real
+  buffer_physical_defense_magnification   Float? @db.Real
+  debuffer_magical_attack_magnification   Float? @db.Real
+  debuffer_magical_defense_magnification  Float? @db.Real
+  debuffer_physical_attack_magnification  Float? @db.Real
+  debuffer_physical_defense_magnification Float? @db.Real
+  recovery_magnification                  Float? @db.Real
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view awakened_memoria_list {
+  unique_id             Int?
+  card_mst_id           Int?
+  rarity                Int?     @db.SmallInt
+  card_type             Int?
+  attribute             Int?     @db.SmallInt
+  quest_skill_mst_id    Int?
+  gvg_skill_mst_id      Int?
+  gvg_auto_skill_mst_id Int?
+  max_phys_atk          Int?
+  max_phys_def          Int?
+  max_mag_atk           Int?
+  max_mag_def           Int?
+  awakened              Boolean?
+  super_awakened        Boolean?
+
+  @@ignore
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view combined_memoria_list {
+  row                   BigInt   @id
+  en_name               String?  @db.VarChar(100)
+  jp_name               String?  @db.VarChar(100)
+  kr_name               String?  @db.VarChar(100)
+  cn_name               String?  @db.VarChar(100)
+  tw_name               String?  @db.VarChar(100)
+  unique_id             Int?
+  card_mst_id           Int?
+  rarity                Int?     @db.SmallInt
+  card_type             Int?
+  attribute             Int?     @db.SmallInt
+  quest_skill_mst_id    Int?
+  gvg_skill_mst_id      Int?
+  gvg_auto_skill_mst_id Int?
+  max_phys_atk          Int?
+  max_phys_def          Int?
+  max_mag_atk           Int?
+  max_mag_def           Int?
+  awakened              Boolean?
+  super_awakened        Boolean?
+  quest_en_name         String?  @db.VarChar
+  quest_en_desc         String?  @db.VarChar
+  gvg_en_name           String?  @db.VarChar
+  gvg_en_desc           String?  @db.VarChar
+  auto_en_name          String?  @db.VarChar
+  auto_en_desc          String?  @db.VarChar
+  quest_jp_name         String?  @db.VarChar
+  quest_jp_desc         String?  @db.VarChar
+  gvg_jp_name           String?  @db.VarChar
+  gvg_jp_desc           String?  @db.VarChar
+  auto_jp_name          String?  @db.VarChar
+  auto_jp_desc          String?  @db.VarChar
+  quest_cn_name         String?  @db.VarChar
+  quest_cn_desc         String?  @db.VarChar
+  gvg_cn_name           String?  @db.VarChar
+  gvg_cn_desc           String?  @db.VarChar
+  auto_cn_name          String?  @db.VarChar
+  auto_cn_desc          String?  @db.VarChar
+  quest_kr_name         String?  @db.VarChar
+  quest_kr_desc         String?  @db.VarChar
+  gvg_kr_name           String?  @db.VarChar
+  gvg_kr_desc           String?  @db.VarChar
+  auto_kr_name          String?  @db.VarChar
+  auto_kr_desc          String?  @db.VarChar
+  quest_tw_name         String?  @db.VarChar
+  quest_tw_desc         String?  @db.VarChar
+  gvg_tw_name           String?  @db.VarChar
+  gvg_tw_desc           String?  @db.VarChar
+  auto_tw_name          String?  @db.VarChar
+  auto_tw_desc          String?  @db.VarChar
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view evolved_memoria_list {
+  unique_id             Int?
+  card_mst_id           Int?
+  rarity                Int?     @db.SmallInt
+  card_type             Int?     @db.SmallInt
+  attribute             Int?     @db.SmallInt
+  quest_skill_mst_id    Int?
+  gvg_skill_mst_id      Int?
+  gvg_auto_skill_mst_id Int?
+  max_phys_atk          Int?
+  max_phys_def          Int?
+  max_mag_atk           Int?
+  max_mag_def           Int?
+  awakened              Boolean?
+  super_awakened        Boolean?
+
+  @@ignore
+}
+
+/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+view super_awakened_memoria_list {
+  unique_id             Int?
+  card_mst_id           Int?
+  rarity                Int?     @db.SmallInt
+  card_type             Int?
+  attribute             Int?     @db.SmallInt
+  quest_skill_mst_id    Int?
+  gvg_skill_mst_id      Int?
+  gvg_auto_skill_mst_id Int?
+  max_phys_atk          Int?
+  max_phys_def          Int?
+  max_mag_atk           Int?
+  max_mag_def           Int?
+  awakened              Boolean?
+  super_awakened        Boolean?
+
+  @@ignore
 }

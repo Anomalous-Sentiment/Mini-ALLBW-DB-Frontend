@@ -4,12 +4,12 @@
         <Button label="Toggle Color Scheme" @click="toggleColorScheme()" />
 
         <Message severity="warn">This is a work-in-progress</Message>
-      <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="card_mst_id" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
+      <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
         scrollable
         scroll-height="67vh"
-        :loading="loading.value"
+        :loading="loading"
       >
 
         <template #empty> No memoria found. </template>
@@ -24,14 +24,14 @@
                 <img :src="`/img/memoria/CardIconS0${data['unique_id']}.png`" alt="Icon" height="64px"/>
             </template>
         </Column>
-        <Column field="name" header="Name" :show-filter-menu="false">
+        <Column :field="`${language}_name`" header="Name" :show-filter-menu="false">
             <template #body="{ data }">
                 <NuxtLink :to="`/card/${data['unique_id']}`">
-                    {{ data['name'] }}
+                    {{ data[`${language}_name`] }}
                 </NuxtLink>
             </template>
             <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name"/>
+                <InputText v-model="textFilter" type="text" @input="debounceFilter(filterCallback, 500)" placeholder="Search by name" />
             </template>
         </Column>
         <Column field="card_type" header="Type" :show-filter-menu="false">
@@ -69,31 +69,31 @@
                 {{ nf.format(data['max_mag_def']) }}
             </template>
         </Column>
-        <Column field="quest_sk" header="Huge Skill" sortable style="min-width: 8rem">
+        <Column :field="`quest_${language}_name`" header="Huge Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
                 <img :src="`/img/icons/quest_icon.png`" alt="Quest Icon" height="16px"/>
                 {{ ' ' }}
-                <b>{{ data['quest_sk'] }}</b>
+                <b>{{ data[`quest_${language}_name`] }}</b>
                 <Divider/>
-                {{ data['quest_desc'] }}
+                {{ data[`quest_${language}_desc`] }}
             </template>
         </Column>
-        <Column field="gvg_sk" header="Legion Skill" sortable style="min-width: 8rem">
+        <Column :field="`gvg_${language}_sk`" header="Legion Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
                 <img :src="`/img/icons/gvg_icon.png`" alt="GvG Icon" height="16px"/>
                 {{ ' ' }}
-                <b>{{ data['gvg_sk'] }}</b>
+                <b>{{ data[`gvg_${language}_name`] }}</b>
                 <Divider/>
-                {{ data['gvg_desc'] }}
+                {{ data[`gvg_${language}_desc`] }}
             </template>
         </Column>
-        <Column field="auto_sk" header="Legion Support Skill" sortable style="min-width: 8rem">
+        <Column :field="`auto_${language}_sk`" header="Legion Support Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
                 <img :src="`/img/icons/gvg_support_icon.png`" alt="GvG Support Icon" height="16px"/>
                 {{ ' ' }}
-                <b>{{ data['auto_sk'] }}</b>
+                <b>{{ data[`auto_${language}_name`] }}</b>
                 <Divider/>
-                {{ data['support_desc'] }}
+                {{ data[`auto_${language}_desc`] }}
             </template>
         </Column>
       </DataTable>
@@ -104,21 +104,42 @@
 
     import { FilterMatchMode } from '@primevue/core/api';
     const memoriaStore = useMemoriaStore()
-    const { memoria } = storeToRefs(memoriaStore)
-
-    console.log(memoria.value)
+    const { memoria, language, textFilter } = storeToRefs(memoriaStore)
+    const nuxtApp = useNuxtApp()
     const nf = new Intl.NumberFormat();
-    const filters = {
+    const nameFilterTimeoutId = ref();
+    const filterTextBox = ref('')
+
+    function debounceFilter()
+    {
+        // Function to filter names of memoria
+        function innerFunc()
+        {
+            console.log('called')
+            memoriaStore.applyFilters()
+        }
+        const debounced = debounce(innerFunc, 1000)
+        debounced()
+    }
+
+    function debounce(func, timeout) {
+        return (...args) => {
+          clearTimeout(nameFilterTimeoutId.value);
+          nameFilterTimeoutId.value = setTimeout(() => {
+            func(...args);
+          }, timeout);
+        }
+    }
+    var filters = ref({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-        'name': { value: null, matchMode: FilterMatchMode.EQUALS },
         'attribute': { value: null, matchMode: FilterMatchMode.EQUALS },
         'card_type': { value: null, matchMode: FilterMatchMode.EQUALS },
-    }
+    })
 
     const { status: statusString } = await useAsyncData('memoria', () => getMemoria())
 
     const loading = computed(() => {
-        if (statusString.value == 'succes')
+        if (statusString.value == 'success')
         {
             return false
         }
@@ -128,7 +149,9 @@
     async function getMemoria()
     {
         await memoriaStore.fetch()
+        return memoria.value
     }
+
 </script>
 
 <style scoped>

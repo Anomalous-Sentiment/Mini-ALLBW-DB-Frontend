@@ -15,6 +15,7 @@
     "msgpackr": "^1.11.0",
     "pinia": "^2.2.0",
     "primevue": "^4.0.1",
+    "underscore": "^1.13.7",
     "vue": "latest"
   },
   "devDependencies": {
