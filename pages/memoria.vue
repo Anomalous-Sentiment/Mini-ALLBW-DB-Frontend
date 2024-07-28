@@ -4,7 +4,7 @@
         <Button label="Toggle Color Scheme" @click="toggleColorScheme()" />
 
         <Message severity="warn">This is a work-in-progress</Message>
-      <DataTable v-model:filters="filters" :value="memoriaList" paginator :rows="100" dataKey="card_mst_id" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
+      <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="card_mst_id" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
         scrollable
@@ -103,6 +103,10 @@
 <script setup>
 
     import { FilterMatchMode } from '@primevue/core/api';
+    const memoriaStore = useMemoriaStore()
+    const { memoria } = storeToRefs(memoriaStore)
+
+    console.log(memoria.value)
     const nf = new Intl.NumberFormat();
     const filters = {
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -111,7 +115,7 @@
         'card_type': { value: null, matchMode: FilterMatchMode.EQUALS },
     }
 
-    const { data: memoriaList, status: statusString } = await useAsyncData('memoria', () => getMemoria())
+    const { status: statusString } = await useAsyncData('memoria', () => getMemoria())
 
     const loading = computed(() => {
         if (statusString.value == 'succes')
@@ -123,15 +127,8 @@
 
     async function getMemoria()
     {
-        const data = await $fetch('/api/memoria')
-        return data
+        await memoriaStore.fetch()
     }
-    
-    function toggleColorScheme() {
-        const element = document.querySelector('html');
-        element.classList.toggle('app-dark-mode');
-    }
-
 </script>
 
 <style scoped>

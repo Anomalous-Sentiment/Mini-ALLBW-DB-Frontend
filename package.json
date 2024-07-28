@@ -12,11 +12,14 @@
   "dependencies": {
     "@primevue/themes": "^4.0.1",
     "@prisma/nuxt": "^0.0.30",
+    "msgpackr": "^1.11.0",
+    "pinia": "^2.2.0",
     "primevue": "^4.0.1",
     "vue": "latest"
   },
   "devDependencies": {
     "@nuxt/image": "^1.7.0",
+    "@pinia/nuxt": "^0.5.2",
     "@prisma/client": "^5.17.0",
     "nuxt": "^3.12.4",
     "prisma": "^5.17.0"

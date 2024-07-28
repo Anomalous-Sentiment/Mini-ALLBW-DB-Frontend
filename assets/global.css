@@ -23,13 +23,11 @@
 }
 */
 :root {
-    --p-datatable-header-background: #161d21;
-    --p-datatable-header-cell-background: #161d21;
+    --p-divider-horizontal-margin: 3px !important;
 }
 
 * {
 
     font-family: sans-serif;
  }
-
  
