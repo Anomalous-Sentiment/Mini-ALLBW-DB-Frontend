@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Message severity="warn">This is a work-in-progress</Message>
+        <Message severity="warn">Data may or may not be accurate. Take it with a grain of salt and use at your own risk</Message>
       <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
@@ -114,7 +114,7 @@
 
     $listen('language:changed', () => {
         console.log('Language changed to: ' + language.value)
-        refreshNuxtData(memoriaDataKey)
+        refreshMemoria()
 
     })
 
@@ -124,7 +124,7 @@
         'card_type': { value: null, matchMode: FilterMatchMode.EQUALS },
     })
 
-    const { status: statusString } = await useAsyncData(memoriaDataKey, () => getMemoria())
+    const { status: statusString, refresh: refreshMemoria} = await useAsyncData(memoriaDataKey, getMemoria)
 
     const loading = computed(() => {
         if (statusString.value == 'success')
@@ -136,7 +136,11 @@
 
     async function getMemoria()
     {
-        await memoriaStore.fetch()
+        console.log('fetching memoria...')
+        if (memoria.value.length == 0 || !(`${language.value}_name` in memoria.value[0]))
+        {
+            await memoriaStore.fetch()
+        }
         return memoria.value
     }
 
@@ -152,10 +156,6 @@
 
 :deep(.p-paginator) {
   padding: 0;
-}
-
-:deep(.p-multiselect .p-multiselect-trigger) {
-    width: 10px;
 }
 
 :deep(.p-message) {

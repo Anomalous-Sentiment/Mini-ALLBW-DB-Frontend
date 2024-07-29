@@ -7,15 +7,12 @@ import MultiSelect from 'primevue/multiselect';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import Panel from 'primevue/panel';
-import InlineMessage from 'primevue/inlinemessage';
-import Dropdown from 'primevue/dropdown';
 import Message from 'primevue/message';
 import Image from 'primevue/image';
 import Tooltip from 'primevue/tooltip';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 import Select from 'primevue/select';
-import DeferredContent from 'primevue/deferredcontent';
 
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
@@ -91,15 +88,12 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("Menubar", Menubar);
     nuxtApp.vueApp.component("Button", Button);
     nuxtApp.vueApp.component("Panel", Panel);
-    nuxtApp.vueApp.component("InlineMessage", InlineMessage);
-    nuxtApp.vueApp.component("Dropdown", Dropdown);
     nuxtApp.vueApp.component("Message", Message);
     nuxtApp.vueApp.component("Image", Image);
     nuxtApp.vueApp.directive('tooltip', Tooltip);
     nuxtApp.vueApp.component("Divider", Divider);
     nuxtApp.vueApp.component("Card", Card);
     nuxtApp.vueApp.component("Select", Select);
-    nuxtApp.vueApp.component("DeferredContent", DeferredContent);
     
     //other components that you need
 });
