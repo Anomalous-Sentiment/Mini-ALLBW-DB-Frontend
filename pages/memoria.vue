@@ -1,7 +1,7 @@
 <template>
     <div>
         
-        <Button label="Toggle Color Scheme" @click="toggleColorScheme()" />
+        <Button label="Toggle Color Scheme" @click="nuxtApp.$toggleColorScheme()" />
 
         <Message severity="warn">This is a work-in-progress</Message>
       <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
@@ -108,7 +108,6 @@
     const nuxtApp = useNuxtApp()
     const nf = new Intl.NumberFormat();
     const nameFilterTimeoutId = ref();
-    const filterTextBox = ref('')
 
     function debounceFilter()
     {
