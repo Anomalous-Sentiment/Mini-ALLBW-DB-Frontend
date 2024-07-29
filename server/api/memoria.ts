@@ -80,11 +80,13 @@ export default defineEventHandler<{ query: { lang: string, unique_id: string } }
   baseSelectParams[autoDesc] = true
 
   // If id exists in route query params, use it to filter results
-  const whereObj : Record<string, Object>= {}
+  var whereObj : Record<string, Object>= {}
   if (query.unique_id)
   {
-    whereObj['where'] = {
-      unique_id: query.unique_id
+    whereObj = {
+      unique_id: {
+        equals: parseInt(query['unique_id'])
+      }
     }
   }
 

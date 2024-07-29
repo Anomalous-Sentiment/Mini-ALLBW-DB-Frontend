@@ -94,7 +94,11 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         })
 
         this.memoria = tempList.filter((element) => element[`${this.language}_name`].toLowerCase().includes(this.textFilter.toLowerCase()))
-
+      },
+      getMemoriaSkills(uniqueId: Number)
+      {
+        const matches = this.allMemoria.filter((element) => element['unique_id'] == uniqueId)
+        return matches
       }
     }
 
