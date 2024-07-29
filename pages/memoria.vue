@@ -89,7 +89,7 @@
         </Column>
         <Column :field="`auto_${language}_sk`" header="Legion Support Skill" sortable style="min-width: 8rem">
             <template #body="{ data }">
-                <img :src="`/img/icons/gvg_support_icon.png`" alt="GvG Support Icon" height="16px"/>
+                <img :src="`/img/icons/auto_icon.png`" alt="GvG Support Icon" height="16px"/>
                 {{ ' ' }}
                 <b>{{ data[`auto_${language}_name`] }}</b>
                 <Divider/>
@@ -109,7 +109,7 @@
     const nf = new Intl.NumberFormat();
     const nameFilterTimeoutId = ref();
 
-    function debounceFilter()
+    function debounceFilter(wait)
     {
         // Function to filter names of memoria
         function innerFunc()
@@ -117,7 +117,7 @@
             console.log('called')
             memoriaStore.applyFilters()
         }
-        const debounced = debounce(innerFunc, 1000)
+        const debounced = debounce(innerFunc, wait)
         debounced()
     }
 

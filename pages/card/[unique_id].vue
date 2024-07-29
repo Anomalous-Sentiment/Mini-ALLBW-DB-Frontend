@@ -12,7 +12,6 @@ import Divider from 'primevue/divider';
 
     const route = useRoute()
     const uniqueId = route.params.unique_id
-    const nf = new Intl.NumberFormat();
     const memoriaStore = useMemoriaStore()
     const { allMemoria, language } = storeToRefs(memoriaStore)
     const nuxtApp = useNuxtApp()
@@ -20,7 +19,7 @@ import Divider from 'primevue/divider';
 
     async function getSkillsList()
     {
-        var skillArr = null
+        var skillArr = []
         if (allMemoria && allMemoria.value.length > 0)
         {
             // If memoria list has been filled, get data from the list

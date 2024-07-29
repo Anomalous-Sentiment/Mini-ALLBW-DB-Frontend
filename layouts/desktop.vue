@@ -42,6 +42,10 @@ const items = ref([
         label: 'Home',
         to: '/'
     },
+    {
+        label: 'Memoria',
+        to: '/memoria'
+    }
 ]);
 </script>
 

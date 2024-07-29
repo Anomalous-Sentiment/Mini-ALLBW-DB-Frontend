@@ -1,5 +1,22 @@
 <template>
+
     <DataTable :value="skillParamArray" dataKey="key" filterDisplay="row" :sortOrder="1">
+        <template #header>
+            <div>
+                <h2>
+                    {{ props.title }}
+                </h2>
+                <Divider/>
+                <h3>
+                    <img :src="`/img/icons/${props.type}_icon.png`" alt="GvG Icon" height="16px"/>
+                    {{ ' ' }}
+                    <span >{{ props.skillData[`${props.type}_${props.lang}_name`] }}</span>
+                </h3>
+                <p>
+                    {{ props.skillData[`${props.type}_${props.lang}_desc`] }}
+                </p>
+            </div>
+        </template>
         <template #empty> No skill data found. </template>
         <template #loading> Loading skill data. Please wait. </template>
         <Column header="#" sortable>
@@ -12,7 +29,7 @@
                 {{ data['key'] }}
             </template>
         </Column>
-        <Column field="1" header="Value">
+        <Column field="value" header="Value">
             <template #body="{ data, index }">
                 {{ data['value'] }}
             </template>
@@ -21,7 +38,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['skillData', 'type', 'lang'])
+const props = defineProps(['skillData', 'type', 'lang', 'title'])
 const skillParamArray = computed(() => processData(props.type, props.skillData))
 
 function processData(type, unprocessedData)
@@ -29,7 +46,6 @@ function processData(type, unprocessedData)
     const output = []
     if (unprocessedData)
     {
-        console.log(unprocessedData)
         Object.entries(unprocessedData).forEach(([key, value]) => {
             // Check if key contains magnification as substring
             if(key.includes('magnification') && key.includes(type))
@@ -47,3 +63,20 @@ function processData(type, unprocessedData)
     return output
 }
 </script>
+
+<style scoped>
+h2 {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+h3 {
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+}
+
+p {
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+</style>

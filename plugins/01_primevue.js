@@ -96,7 +96,6 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.directive('tooltip', Tooltip);
     nuxtApp.vueApp.component("Divider", Divider);
     nuxtApp.vueApp.component("Card", Card);
-
-
+    
     //other components that you need
 });
