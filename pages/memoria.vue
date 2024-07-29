@@ -1,8 +1,5 @@
 <template>
     <div>
-        
-        <Button label="Toggle Color Scheme" @click="nuxtApp.$toggleColorScheme()" />
-
         <Message severity="warn">This is a work-in-progress</Message>
       <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
@@ -105,9 +102,17 @@
     import { FilterMatchMode } from '@primevue/core/api';
     const memoriaStore = useMemoriaStore()
     const { memoria, language, textFilter } = storeToRefs(memoriaStore)
-    const nuxtApp = useNuxtApp()
     const nf = new Intl.NumberFormat();
     const nameFilterTimeoutId = ref();
+    const { $listen } = useNuxtApp()
+    const memoriaDataKey = 'memoria'
+
+
+    $listen('language:changed', () => {
+        console.log('Language changed to: ' + language.value)
+        refreshNuxtData(memoriaDataKey)
+
+    })
 
     function debounceFilter(wait)
     {
@@ -135,7 +140,7 @@
         'card_type': { value: null, matchMode: FilterMatchMode.EQUALS },
     })
 
-    const { status: statusString } = await useAsyncData('memoria', () => getMemoria())
+    const { status: statusString } = await useAsyncData(memoriaDataKey, () => getMemoria())
 
     const loading = computed(() => {
         if (statusString.value == 'success')

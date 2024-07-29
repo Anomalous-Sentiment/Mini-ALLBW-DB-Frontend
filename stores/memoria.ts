@@ -75,6 +75,8 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         if (this.language != newLang)
         {
             this.language = newLang
+            const { $event } = useNuxtApp()
+            $event("language:changed")
         }
       },
       applyFilters(filters: Array<Object> = []) 
@@ -99,7 +101,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
       {
         const matches = this.allMemoria.filter((element) => element['unique_id'] == uniqueId)
         return matches
-      }
+      },
     }
 
   })

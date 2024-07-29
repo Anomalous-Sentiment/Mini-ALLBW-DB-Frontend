@@ -18,8 +18,17 @@
                 <Menubar :model="items">
                     <template #start>
                     </template>
+                    <template #item="{ item, props, hasSubmenu }">
+                        <NuxtLink v-slot="{ href, navigate }" :to="item.to" custom>
+                            <a :href="href" v-bind="props.action" @click="navigate">
+                                <span>{{ item.label }}</span>
+                            </a>
+                        </NuxtLink>
+                    </template>
                     <template #end>
-                        Template End
+                        <Button label="Toggle Color Scheme" @click="nuxtApp.$toggleColorScheme()" />
+                            {{ ' ' }}
+                            <Select v-model="language" :options="languageOptions" optionLabel="name" placeholder="Select a language" @change="() => memoriaStore.setLang(language.key)" />
                     </template>
                 </Menubar>
                 <slot />
@@ -36,6 +45,9 @@
 
 <script setup>
 import { ref } from "vue";
+const nuxtApp = useNuxtApp()
+const memoriaStore = useMemoriaStore()
+const language = ref('en')
 
 const items = ref([
     {
@@ -47,6 +59,29 @@ const items = ref([
         to: '/memoria'
     }
 ]);
+
+const languageOptions = [
+    {
+        'key': 'en',
+        'name': 'English'
+    },
+    {
+        'key': 'jp',
+        'name': 'Japanese'
+    },
+    {
+        'key': 'cn',
+        'name': 'Chinese'
+    },
+    {
+        'key': 'kr',
+        'name': 'Korean'
+    },
+    {
+        'key': 'tw',
+        'name': 'Taiwanese'
+    }
+]
 </script>
 
 <style scoped>
