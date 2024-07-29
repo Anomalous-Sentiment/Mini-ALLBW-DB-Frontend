@@ -15,6 +15,7 @@ import Tooltip from 'primevue/tooltip';
 import Divider from 'primevue/divider';
 import Card from 'primevue/card';
 import Select from 'primevue/select';
+import DeferredContent from 'primevue/deferredcontent';
 
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
@@ -98,6 +99,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.component("Divider", Divider);
     nuxtApp.vueApp.component("Card", Card);
     nuxtApp.vueApp.component("Select", Select);
+    nuxtApp.vueApp.component("DeferredContent", DeferredContent);
     
     //other components that you need
 });

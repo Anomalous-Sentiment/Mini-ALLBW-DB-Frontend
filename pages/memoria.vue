@@ -18,7 +18,7 @@
         </Column>
         <Column field="card_mst_id" header="Icon">
             <template #body="{ data }">
-                <img :src="`/img/memoria/CardIconS0${data['unique_id']}.png`" alt="Icon" height="64px"/>
+                <img :src="`/img/memoria/CardIconS0${data['unique_id']}.png`" alt="Icon" height="64px" loading="lazy"/>
             </template>
         </Column>
         <Column :field="`${language}_name`" header="Name" :show-filter-menu="false">
@@ -27,8 +27,8 @@
                     {{ data[`${language}_name`] }}
                 </NuxtLink>
             </template>
-            <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="textFilter" type="text" @input="debounceFilter(filterCallback, 500)" placeholder="Search by name" />
+            <template #filter="{ }">
+                <InputText v-model="textFilter" type="text" @input="debouncedSearch" placeholder="Search by name" />
             </template>
         </Column>
         <Column field="card_type" header="Type" :show-filter-menu="false">
@@ -100,6 +100,7 @@
 <script setup>
 
     import { FilterMatchMode } from '@primevue/core/api';
+    import { useDebounceFn } from '@vueuse/core'
     const memoriaStore = useMemoriaStore()
     const { memoria, language, textFilter } = storeToRefs(memoriaStore)
     const nf = new Intl.NumberFormat();
@@ -107,6 +108,9 @@
     const { $listen } = useNuxtApp()
     const memoriaDataKey = 'memoria'
 
+    const debouncedSearch = useDebounceFn(async() => {
+        await memoriaStore.applyFilters()
+    }, 500)
 
     $listen('language:changed', () => {
         console.log('Language changed to: ' + language.value)
@@ -114,26 +118,6 @@
 
     })
 
-    function debounceFilter(wait)
-    {
-        // Function to filter names of memoria
-        function innerFunc()
-        {
-            console.log('called')
-            memoriaStore.applyFilters()
-        }
-        const debounced = debounce(innerFunc, wait)
-        debounced()
-    }
-
-    function debounce(func, timeout) {
-        return (...args) => {
-          clearTimeout(nameFilterTimeoutId.value);
-          nameFilterTimeoutId.value = setTimeout(() => {
-            func(...args);
-          }, timeout);
-        }
-    }
     var filters = ref({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS },
         'attribute': { value: null, matchMode: FilterMatchMode.EQUALS },

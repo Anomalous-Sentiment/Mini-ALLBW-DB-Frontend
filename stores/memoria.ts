@@ -79,8 +79,9 @@ export const useMemoriaStore = defineStore('memoriaStore', {
             $event("language:changed")
         }
       },
-      applyFilters(filters: Array<Object> = []) 
+      async applyFilters(filters: Array<Object> = []) 
       {
+        var startTime = performance.now()
         var tempList = []
         // Create an array of filter functions
         const filterFunctions : Array<Function> = filters.map((filtObj : any) => {
@@ -96,6 +97,11 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         })
 
         this.memoria = tempList.filter((element) => element[`${this.language}_name`].toLowerCase().includes(this.textFilter.toLowerCase()))
+
+
+        var endTime = performance.now()
+
+        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
       },
       getMemoriaSkills(uniqueId: Number)
       {
