@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-const props = defineProps(['skillData', 'type'])
+const props = defineProps(['skillData', 'type', 'lang'])
 const skillParamArray = computed(() => processData(props.type, props.skillData))
 
 function processData(type, unprocessedData)

@@ -1,11 +1,15 @@
 <template>
     <div v-for="skill in skillsList">
-        <MemoriaSkillsDisplay :skillData="skill"/>
+        <MemoriaSkillsDisplay :skillData="skill" :lang="language"/>
+        <br/>
+        <Divider/>
     </div>
 
 </template>
 
 <script setup>
+import Divider from 'primevue/divider';
+
     const route = useRoute()
     const uniqueId = route.params.unique_id
     const nf = new Intl.NumberFormat();

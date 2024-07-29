@@ -4,13 +4,13 @@
     </h1>
     <div class="flex-container">
         <div class="flex-element-side">
-            <SingleSkillDisplay :skillData="props.skillData" type="quest"/>
+            <SingleSkillDisplay :skillData="props.skillData" type="quest" :lang="props.lang"/>
         </div>
         <div class="flex-element-main">
-            <SingleSkillDisplay :skillData="props.skillData" type="gvg"/>
+            <SingleSkillDisplay :skillData="props.skillData" type="gvg" :lang="props.lang"/>
         </div>
         <div class="flex-element-side">
-            <SingleSkillDisplay :skillData="props.skillData" type="auto"/>
+            <SingleSkillDisplay :skillData="props.skillData" type="auto" :lang="props.lang"/>
         </div>
     </div>
 </template>
@@ -18,7 +18,7 @@
 <script setup>
 import SingleSkillDisplay from './SingleSkillDisplay.vue';
 
-const props = defineProps(['skillData'])
+const props = defineProps(['skillData', 'lang'])
 const header = `Memoria Name`
 </script>
 
