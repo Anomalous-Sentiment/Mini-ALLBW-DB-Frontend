@@ -14,12 +14,10 @@ export default defineNuxtConfig({
     }
   },
   components: {
-    global: true
+    global: true,
+    dirs: ['~/components']
   },
   css: [
     '@/assets/global.css',
   ],
-  image: {
-    // Options
-  }
 })

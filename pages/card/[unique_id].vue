@@ -1,34 +1,7 @@
 <template>
-    <div class="flex-container">
-        <div class="flex-element-side">
-            Test
-        </div>
-        <div class="flex-element-main">
-            <DataTable :value="gvg_skill_data" dataKey="0" filterDisplay="row" :sortOrder="1">
+    <SkillsDisplay :gvgSkillData="gvgSkillData">
 
-        <template #empty> No data found. </template>
-        <template #loading> Loading memoria data. Please wait. </template>
-        <Column header="#" sortable>
-            <template #body="{ data, index }">
-                {{ index + 1 }}
-            </template>
-        </Column>
-        <Column field="key" header="Parameter">
-            <template #body="{ data, index }">
-                {{ data['key'] }}
-            </template>
-        </Column>
-        <Column field="1" header="Value">
-            <template #body="{ data, index }">
-                {{ data['value'] }}
-            </template>
-        </Column>
-      </DataTable>
-        </div>
-        <div class="flex-element-side">
-            Test right
-        </div>
-    </div>
+    </SkillsDisplay>
 </template>
 
 <script setup>
@@ -36,21 +9,47 @@
     const uniqueId = route.params.unique_id
     const nf = new Intl.NumberFormat();
 
-    const { data: gvg_skill_data, status: statusString } = await useAsyncData('gvg_skill', () => getSkillData())
-    const { data: gvg_support_data, status: statusString2 } = await useAsyncData('gvg_support', () => getSupporSkillData())
+    const { data: gvgSkillData, status: statusString } = await useAsyncData('gvg_skill', () => getSkillData())
+    const { data: gvgSupportSkillData, status: statusString2 } = await useAsyncData('gvg_support', () => getSupporSkillData())
 
     async function getSkillData()
     {
+        const output = []
         const data = await $fetch('/api/skill_data', { query: { id: uniqueId } })
-        const output = Object.entries(data[0]).map(([key, value]) => ({key,value}));
-        console.log(output)
+        Object.entries(data[0]).forEach(([key, value]) => {
+            // Check if key contains magnification as substring
+            if(key.includes('magnification'))
+            {
+                // Check if value not null
+                if(value)
+                {
+                    // Add to output array
+                    output.push({key, value})
+                }
+            }
+        })
+        // const output = Object.entries(data[0]).map(([key, value]) => ({key,value}));
+        const entries = Object.entries(data[0]);
         return output
     }
 
     async function getSupporSkillData()
     {
+        const output = []
         const data = await $fetch('/api/support_skill_data', { query: { id: uniqueId } })
-        const output = Object.entries(data[0]).map(([key, value]) => ({key,value}));
+        // const output = Object.entries(data[0]).map(([key, value]) => ({key,value}));
+        Object.entries(data[0].forEach(([key, value]) => {
+            // Check if key contains magnification as substring
+            if(key.includes('magnification'))
+            {
+                // Check if value not null
+                if(value)
+                {
+                    // Add to output array
+                    output.push({key, value})
+                }
+            }
+        }));
 
         return output
     }

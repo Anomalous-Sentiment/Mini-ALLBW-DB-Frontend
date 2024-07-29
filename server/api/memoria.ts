@@ -1,8 +1,9 @@
+import Unique_id from "~/pages/card/[unique_id].vue";
 import { usePacker } from "../utils/msgpacker";
 
 export default defineEventHandler<{ query: { lang: string, unique_id: string } }>(async (event) => {
   const query = getQuery(event)
-  console.log(query)
+
   const memoName = `${query.lang}_name`
   const questName = `quest_${query.lang}_name`
   const gvgName = `gvg_${query.lang}_name`
@@ -78,9 +79,20 @@ export default defineEventHandler<{ query: { lang: string, unique_id: string } }
   baseSelectParams[gvgDesc] = true
   baseSelectParams[autoDesc] = true
 
+  // If id exists in route query params, use it to filter results
+  const whereObj : Record<string, Object>= {}
+  if (query.unique_id)
+  {
+    whereObj['where'] = {
+      unique_id: query.unique_id
+    }
+  }
+
+
   const memoria = await prisma.combined_memoria_list.findMany(
     {
-      select: baseSelectParams
+      select: baseSelectParams,
+      where: whereObj
     }
   )
 
