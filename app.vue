@@ -27,4 +27,7 @@
     display: flex !important;
     align-items: center;
 }
+.p-datatable {
+  border: 1px solid var(--p-panel-border-color)
+}
 </style>
