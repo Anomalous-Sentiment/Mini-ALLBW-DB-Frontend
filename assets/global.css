@@ -1,29 +1,29 @@
-/*
-.p-datatable-header-cell {
-    background: #161d21 !important;
 
-}
-
-.p-datatable .p-datatable-tbody>tr {
-    background: #161d21;
-}
-
-.p-datatable .p-datatable-tbody>tr>td {
-    border: solid #263238;
-    padding: .2rem;
-    border-width: 0 0 2px;
-}
-
-.p-paginator {
-    background: #161d21 !important;
-    border: 2px solid #263238;
-    border-radius: 6px;
-    color: #fff9;
-    padding: .5rem 1rem;
-}
-*/
 :root {
     --p-divider-horizontal-margin: 3px !important;
+}
+
+/* Making ag grid inherit colours from the primevue theme preset */
+.ag-theme-quartz-dark {
+    --ag-background-color: var(--p-content-background);
+    --ag-header-background-color: var(--p-content-background);
+    /* var(--p-surface-950) */
+    --ag-foreground-color: var(--p-text-color);
+    --ag-border-color: var(--p-datatable-header-cell-border-color);
+    /* --ag-border-color: var(--p-surface-800);
+    --ag-border-color: var(--p-surface-200); */
+    --ag-row-height: '50%';
+}
+
+:deep(.centered-img) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+:deep(.centered-cell) {
+    display: flex !important;
+    align-items: center;
 }
 
 * {
