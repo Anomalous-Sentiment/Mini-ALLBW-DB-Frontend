@@ -22,5 +22,7 @@ export default defineNuxtConfig({
   },
   css: [
     '@/assets/global.css',
+    'ag-grid-community/styles/ag-grid.css',
+    'ag-grid-community/styles/ag-theme-quartz.css',
   ],
 })

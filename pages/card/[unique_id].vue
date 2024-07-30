@@ -15,8 +15,13 @@ import Divider from 'primevue/divider';
     const memoriaStore = useMemoriaStore()
     const { allMemoria, language } = storeToRefs(memoriaStore)
     const nuxtApp = useNuxtApp()
-    const { data: skillsList, status: statusString } = await useAsyncData('skillsList', () => getSkillsList())
+    const { data: skillsList, refresh: refreshSkillData } = await useAsyncData('skillsList', () => getSkillsList())
 
+    nuxtApp.$listen('language:changed', () => {
+        console.log('Language changed to: ' + language.value)
+        refreshSkillData()
+
+    })
     async function getSkillsList()
     {
         var skillArr = []

@@ -65,6 +65,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
             lang: this.language
         }
 
+        console.log('fetching memoria...')
         const data = await nuxtApp.$fetchMsgpack('/api/memoria', queryParams)
 
         this.allMemoria = data
@@ -101,7 +102,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
 
         var endTime = performance.now()
 
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`)
+        console.log(`Call to applyFilters took ${endTime - startTime} milliseconds`)
       },
       getMemoriaSkills(uniqueId: Number)
       {
