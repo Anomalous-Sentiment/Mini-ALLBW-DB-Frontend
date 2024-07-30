@@ -2,6 +2,7 @@
 
 export const useMemoriaStore = defineStore('memoriaStore', {
     state: () => ({
+      schemeVal: 0,
       allMemoria: [],
       memoria: [],
       language: 'en',

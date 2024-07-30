@@ -120,7 +120,7 @@
     import TableNameCell from '~/components/TableNameCell.vue';
     import TypeIcon from '~/components/TypeIcon.vue';
     const memoriaStore = useMemoriaStore()
-    const { memoria, language, textFilter } = storeToRefs(memoriaStore)
+    const { memoria, language, textFilter, schemeVal } = storeToRefs(memoriaStore)
     const nf = new Intl.NumberFormat();
     const { $listen } = useNuxtApp()
     const memoriaDataKey = 'memoria'
@@ -152,7 +152,10 @@
             wrapText: true,
             cellRenderer: TypeIcon,
             maxWidth: 70,
-            cellClass: 'centered-cell'
+            cellClass: 'centered-cell',
+            cellRendererParams: {
+                schemeVal: schemeVal.value
+            }
         },
         {
             field: `rarity`,

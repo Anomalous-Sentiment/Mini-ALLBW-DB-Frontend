@@ -28,7 +28,7 @@
                     <template #end>
                         <Button label="Toggle Alternate Table" @click="nuxtApp.$event('table:toggled')"  v-if="route.path == '/memoria'"/>
                             {{ ' ' }}
-                        <Button label="Toggle Color Scheme" @click="nuxtApp.$toggleColorScheme()" />
+                        <Button label="Toggle Color Scheme" @click="() => changeColourScheme()" />
                             {{ ' ' }}
                             <Select v-model="language" :options="languageOptions" optionLabel="name" placeholder="Select a language" @change="() => memoriaStore.setLang(language.key)" />
                     </template>
@@ -49,6 +49,7 @@
 import { ref } from "vue";
 const nuxtApp = useNuxtApp()
 const memoriaStore = useMemoriaStore()
+const { schemeVal } = storeToRefs(memoriaStore)
 const language = ref('en')
 const route = useRoute()
 const items = ref([
@@ -84,6 +85,20 @@ const languageOptions = [
         'name': 'Taiwanese'
     }
 ]
+
+function changeColourScheme()
+{
+    nuxtApp.$toggleColorScheme()
+    if (schemeVal.value == 0)
+    {
+        schemeVal.value = 1
+    }
+    else
+    {
+        schemeVal.value = 0
+    }
+}
+
 </script>
 
 <style scoped>
