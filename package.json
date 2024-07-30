@@ -12,6 +12,7 @@
   "dependencies": {
     "@primevue/themes": "^4.0.1",
     "@prisma/nuxt": "^0.0.30",
+    "ag-grid-vue3": "^32.0.2",
     "msgpackr": "^1.11.0",
     "pinia": "^2.2.0",
     "primevue": "^4.0.1",

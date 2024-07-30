@@ -1,7 +1,21 @@
 <template>
-    <div>
+    <div class="ag-theme-quartz-dark">
         <Message severity="warn">Data may or may not be accurate. Take it with a grain of salt and use at your own risk</Message>
-      <DataTable v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
+ 
+        <ag-grid-vue
+        v-if="!toggleTable"
+        :rowData="memoria"
+        :columnDefs="colDefs"
+        :rowHeight="64"
+        style="height: 67vh"
+        class="ag-theme-quartz-dark"
+        pagination="true"
+        :defaultColDef="defaultColDef"
+        :autoSizeStrategy="autoSizeStrategy"
+        >
+        </ag-grid-vue>
+ 
+        <DataTable v-if="toggleTable" v-model:filters="filters" :value="memoria" paginator :rows="100" dataKey="row" filterDisplay="row" sortField="card_mst_id" :sortOrder="1"
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
         scrollable
@@ -98,23 +112,171 @@
   </template>
 
 <script setup>
-
     import { FilterMatchMode } from '@primevue/core/api';
     import { useDebounceFn } from '@vueuse/core'
+    import MemoriaIcon from '~/components/MemoriaIcon.vue';
+    import RarityIcon from '~/components/RarityIcon.vue';
+    import SkillCellDisplay from '~/components/SkillCellDisplay.vue';
+    import TableNameCell from '~/components/TableNameCell.vue';
+    import TypeIcon from '~/components/TypeIcon.vue';
     const memoriaStore = useMemoriaStore()
     const { memoria, language, textFilter } = storeToRefs(memoriaStore)
     const nf = new Intl.NumberFormat();
-    const nameFilterTimeoutId = ref();
     const { $listen } = useNuxtApp()
     const memoriaDataKey = 'memoria'
+    const autoSizeStrategy = {
+        type: 'fitGridWidth',
+    };
+    const colDefs = computed(() => {
+        return [
+        {
+            field: 'unique_id',
+            headerName: 'Icon',
+            cellRenderer: MemoriaIcon,
+            wrapText: true,
+            filter: false,
+            maxWidth: 64,
+            cellClass: 'centered-img'
+        },
+        {
+            field: `${language.value}_name`,
+            headerName: 'Name',
+            wrapText: true,
+            filter: 'agTextColumnFilter',
+            cellRenderer: TableNameCell,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `card_type`,
+            headerName: 'Type',
+            wrapText: true,
+            cellRenderer: TypeIcon,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `rarity`,
+            headerName: 'Rarity',
+            wrapText: true,
+            cellRenderer: RarityIcon,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `attribute`,
+            headerName: 'Attribute',
+            wrapText: true,
+            cellRenderer: (params) => `<img src="img/icons/attribute_${params.value}.png" alt="Attribute Icon" class="image" width="32pc" height="32px">`,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
 
+        },
+        {
+            field: `max_phys_atk`,
+            headerName: 'R. Atk',
+            wrapText: true,
+            cellDataType: 'number',
+            filter: false,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `max_phys_def`,
+            headerName: 'R. Def',
+            wrapText: true,
+            cellDataType: 'number',
+            filter: false,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `max_mag_atk`,
+            headerName: 'Sp. Atk',
+            wrapText: true,
+            cellDataType: 'number',
+            filter: false,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `max_mag_def`,
+            headerName: 'Sp. Def',
+            wrapText: true,
+            cellDataType: 'number',
+            filter: false,
+            maxWidth: 70,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `quest_${language}_sk`,
+            headerName: 'Huge Skill',
+            cellRenderer: SkillCellDisplay,
+            wrapText: true,
+            filter: false,
+            autoHeight: true,
+            sortable: false,
+            minWidth: 250,
+            valueGetter: (p) => {
+                const newVal = {}
+                newVal[`name`] = p.data[`quest_${language.value}_name`]
+                newVal[`desc`] = p.data[`quest_${language.value}_desc`]
+                newVal[`type`] = 'quest'
+                return newVal
+            }
+        },
+        {
+            field: `gvg_${language}_sk`,
+            headerName: 'Legion Skill',
+            cellRenderer: SkillCellDisplay,
+            wrapText: true,
+            filter: false,
+            autoHeight: true,
+            sortable: false,
+            valueGetter: (p) => {
+                const newVal = {}
+                newVal[`name`] = p.data[`gvg_${language.value}_name`]
+                newVal[`desc`] = p.data[`gvg_${language.value}_desc`]
+                newVal[`type`] = 'gvg'
+                return newVal
+            }
+
+        },
+        {
+            field: `auto_${language}_sk`,
+            headerName: 'Legion Support Skill',
+            cellRenderer: SkillCellDisplay,
+            wrapText: true,
+            filter: false,
+            autoHeight: true,
+            sortable: false,
+            valueGetter: (p) => {
+                const newVal = {}
+                newVal[`name`] = p.data[`gvg_${language.value}_name`]
+                newVal[`desc`] = p.data[`gvg_${language.value}_desc`]
+                newVal[`type`] = 'gvg'
+                return newVal
+            }
+
+        },
+        
+    ]})
+    const defaultColDef = ref({
+      filter: "agTextColumnFilter",
+      floatingFilter: true,
+    });
     const debouncedSearch = useDebounceFn(async() => {
         await memoriaStore.applyFilters()
     }, 500)
 
     $listen('language:changed', () => {
-        console.log('Language changed to: ' + language.value)
         refreshMemoria()
+
+    })
+
+    const toggleTable = ref(false)
+    $listen('table:toggled', () => {
+        // Change to the alternate table
+        toggleTable.value = !toggleTable.value
 
     })
 
@@ -136,12 +298,17 @@
 
     async function getMemoria()
     {
-        console.log('fetching memoria...')
+
         if (memoria.value.length == 0 || !(`${language.value}_name` in memoria.value[0]))
         {
             await memoriaStore.fetch()
         }
         return memoria.value
+    }
+
+    function getRowHeight(params)
+    {
+        return params.data.rowHeight;
     }
 
 </script>
@@ -161,9 +328,4 @@
 :deep(.p-message) {
     margin: 0rem;
 }
-/*
-:deep(.p-message .p-message-wrapper) {
-    padding: 0.5rem 1rem;
-}
-*/
 </style>
