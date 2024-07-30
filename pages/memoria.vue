@@ -277,6 +277,9 @@
     $listen('table:toggled', () => {
         // Change to the alternate table
         toggleTable.value = !toggleTable.value
+        // Reset text filter
+        textFilter.value = ''
+        debouncedSearch()
 
     })
 
