@@ -17,20 +17,17 @@ import Divider from 'primevue/divider';
     const nuxtApp = useNuxtApp()
     const { data: skillsList, refresh: refreshSkillData } = await useAsyncData('skillsList', () => getSkillsList())
 
-    nuxtApp.$listen('language:changed', () => {
-        console.log('Language changed to: ' + language.value)
+    nuxtApp.$listen('language:changed', async() => {
+        console.log('(Memo page)Language changed to: ' + language.value)
         refreshSkillData()
 
     })
     async function getSkillsList()
     {
         var skillArr = []
-        if (allMemoria && allMemoria.value.length > 0)
-        {
-            // If memoria list has been filled, get data from the list
-            skillArr = memoriaStore.getMemoriaSkills(parseInt(uniqueId))
-        }
-        else
+        // If memoria list has been filled, get data from the list
+        skillArr = memoriaStore.getMemoriaSkills(parseInt(uniqueId))
+        if (!skillArr || !skillArr[0][`${language.value}_name`])
         {
             // Not filled, get the data from the API using unique_id
             skillArr = await nuxtApp.$fetchMsgpack('/api/memoria', {unique_id: uniqueId, lang: language.value})
