@@ -4,6 +4,18 @@
     </NuxtLayout>
   </template>
 
+<script setup>
+
+const siteTitle = 'Mini ALLBW DB'
+useSeoMeta({
+  title: siteTitle,
+  ogTitle: siteTitle,
+  description: 'A small database frontend for the game Assault Lily Last Bullet W',
+  ogDescription: 'A small database frontend for the game Assault Lily Last Bullet W',
+  twitterCard: 'summary_large_image',
+})
+</script>
+
 <style>
 /* Making ag grid inherit colours from the primevue theme preset */
 .ag-theme-quartz-dark {
