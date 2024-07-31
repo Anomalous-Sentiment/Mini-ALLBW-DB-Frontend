@@ -25,7 +25,9 @@
         var skillArr = []
         // If memoria list has been filled, get data from the list
         skillArr = memoriaStore.getMemoriaSkills(parseInt(uniqueId))
-        if ((!skillArr && skillArr.length > 0) || !skillArr[0][`${language.value}_name`])
+
+        // If no matches found in store, or langauge does not match, then fetch data from API
+        if (skillArr.length == 0 || !skillArr[0][`${language.value}_name`])
         {
             // Not filled, get the data from the API using unique_id
             skillArr = await nuxtApp.$fetchMsgpack('/api/memoria', {unique_id: uniqueId, lang: language.value})
