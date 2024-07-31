@@ -51,6 +51,7 @@ const colDefs = computed(() => {
             wrapText: true,
             filter: false,
             maxWidth: 64,
+            minWidth: 64,
             cellClass: 'centered-img'
         },
         {
@@ -58,8 +59,8 @@ const colDefs = computed(() => {
             headerName: 'Name',
             wrapText: true,
             filter: 'agTextColumnFilter',
-            cellRenderer: TableNameCell,
-            cellClass: 'centered-cell'
+            cellClass: 'centered-cell',
+            minWidth: 170,
         },
         {
             field: `card_type`,
@@ -67,7 +68,8 @@ const colDefs = computed(() => {
             wrapText: true,
             cellRenderer: TypeIcon,
             maxWidth: 70,
-            cellClass: 'centered-cell',
+            minWidth: 38,
+            cellClass: 'centered-img',
             cellRendererParams: {
                 schemeVal: props.schemeVal
             }
@@ -77,14 +79,18 @@ const colDefs = computed(() => {
             headerName: 'Rarity',
             wrapText: true,
             cellRenderer: RarityIcon,
-            cellClass: 'centered-cell'
+            maxWidth: 70,
+            minWidth: 38,
+            cellClass: 'centered-img'
         },
         {
             field: `attribute`,
             headerName: 'Attribute',
             wrapText: true,
             cellRenderer: (params) => `<img src="/img/icons/attribute_${params.value}.png" alt="Attribute Icon" class="image" width="32pc" height="32px">`,
-            cellClass: 'centered-cell'
+            maxWidth: 70,
+            minWidth: 38,
+            cellClass: 'centered-img'
 
         },
         {
@@ -93,6 +99,8 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
+            maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -101,6 +109,8 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
+            maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -109,6 +119,8 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
+            maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -117,6 +129,8 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
+            minWidth: 70,
+            maxWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -124,14 +138,18 @@ const colDefs = computed(() => {
             headerName: 'Awakened?',
             wrapText: true,
             filter: false,
-            cellClass: 'centered-cell'
+            cellClass: 'centered-cell',
+            minWidth: 70,
+            maxWidth: 70,
         },
         {
             field: `super_awakened`,
             headerName: 'Super Awakened?',
             wrapText: true,
             filter: false,
-            cellClass: 'centered-cell'
+            cellClass: 'centered-cell',
+            minWidth: 70,
+            maxWidth: 70,
         },
     ]
 })
