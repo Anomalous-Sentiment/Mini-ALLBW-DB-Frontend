@@ -35,7 +35,6 @@
 import MemoriaIcon from '~/components/MemoriaIcon.vue';
 import SingleSkillDisplay from './SingleSkillDisplay.vue';
 import RarityIcon from '~/components/RarityIcon.vue';
-import TableNameCell from '~/components/TableNameCell.vue';
 import TypeIcon from '~/components/TypeIcon.vue';
 const props = defineProps(['skillData', 'lang', 'schemeVal'])
 const header = computed(() => props.skillData[`${props.lang}_name`])
@@ -61,13 +60,13 @@ const colDefs = computed(() => {
             filter: 'agTextColumnFilter',
             cellClass: 'centered-cell',
             minWidth: 170,
+            maxWidth: 300,
         },
         {
             field: `card_type`,
             headerName: 'Type',
             wrapText: true,
             cellRenderer: TypeIcon,
-            maxWidth: 70,
             minWidth: 38,
             cellClass: 'centered-img',
             cellRendererParams: {
@@ -79,7 +78,6 @@ const colDefs = computed(() => {
             headerName: 'Rarity',
             wrapText: true,
             cellRenderer: RarityIcon,
-            maxWidth: 70,
             minWidth: 38,
             cellClass: 'centered-img'
         },
@@ -88,7 +86,6 @@ const colDefs = computed(() => {
             headerName: 'Attribute',
             wrapText: true,
             cellRenderer: (params) => `<img src="/img/icons/attribute_${params.value}.png" alt="Attribute Icon" class="image" width="32pc" height="32px">`,
-            maxWidth: 70,
             minWidth: 38,
             cellClass: 'centered-img'
 
@@ -99,7 +96,6 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
-            maxWidth: 70,
             minWidth: 70,
             cellClass: 'centered-cell'
         },
@@ -109,7 +105,6 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
-            maxWidth: 70,
             minWidth: 70,
             cellClass: 'centered-cell'
         },
@@ -119,7 +114,6 @@ const colDefs = computed(() => {
             wrapText: true,
             cellDataType: 'number',
             filter: false,
-            maxWidth: 70,
             minWidth: 70,
             cellClass: 'centered-cell'
         },
@@ -130,7 +124,6 @@ const colDefs = computed(() => {
             cellDataType: 'number',
             filter: false,
             minWidth: 70,
-            maxWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -140,7 +133,6 @@ const colDefs = computed(() => {
             filter: false,
             cellClass: 'centered-cell',
             minWidth: 70,
-            maxWidth: 70,
         },
         {
             field: `super_awakened`,
@@ -149,7 +141,6 @@ const colDefs = computed(() => {
             filter: false,
             cellClass: 'centered-cell',
             minWidth: 70,
-            maxWidth: 70,
         },
     ]
 })
@@ -157,20 +148,28 @@ const colDefs = computed(() => {
 </script>
 
 <style scoped>
-    .flex-container {
+.flex-container{
+    display: flex;
+    flex-wrap: wrap
+}
+
+.flex-element{
+    margin: 2px;
+    flex-grow: 1;
+    width: 50rem;
+}
+
+@media (max-width: 1000px) {
+    .flex-container{
         display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
+        flex-wrap: wrap
     }
 
-    .flex-element-main {
-        max-width: 33%;
-        min-width: 33%;
+    .flex-element{
+        margin: 2px;
+        flex-grow: 1;
+        width: 50%;
     }
+}
 
-    .flex-element-side {
-        flex: 1;
-        margin: 0 10px 0 10px;
-
-    }
 </style>
