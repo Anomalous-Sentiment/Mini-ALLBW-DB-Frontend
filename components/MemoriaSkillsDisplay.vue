@@ -3,6 +3,10 @@
         <template #header>
             <h1>
                 {{ header }}
+                <span style="color: red;">
+                    {{ props.skillData['super_awakened'] ? '(Super Awakened)' :  props.skillData['awakened'] ? '(Awakened)' :  ''}}
+                </span>
+
             </h1>
         </template>
         <div>
