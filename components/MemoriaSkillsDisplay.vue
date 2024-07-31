@@ -39,8 +39,6 @@ import TableNameCell from '~/components/TableNameCell.vue';
 import TypeIcon from '~/components/TypeIcon.vue';
 const props = defineProps(['skillData', 'lang'])
 const header = computed(() => props.skillData[`${props.lang}_name`])
-const awakened = computed(() => `Awakened: ${props.skillData['awakened']}`)
-const superAwakened = computed(() => `Super Awakened: ${props.skillData['super_awakened']}`)
 const autoSizeStrategy = {
         type: 'fitGridWidth',
     };
@@ -114,6 +112,20 @@ const colDefs = computed(() => {
             headerName: 'Sp. Def',
             wrapText: true,
             cellDataType: 'number',
+            filter: false,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `awakened`,
+            headerName: 'Awakened?',
+            wrapText: true,
+            filter: false,
+            cellClass: 'centered-cell'
+        },
+        {
+            field: `super_awakened`,
+            headerName: 'Super Awakened?',
+            wrapText: true,
             filter: false,
             cellClass: 'centered-cell'
         },
