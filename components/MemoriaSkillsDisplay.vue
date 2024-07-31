@@ -17,13 +17,13 @@
             </ag-grid-vue>
         </div>
         <div class="flex-container">
-            <div class="flex-element-side">
+            <div class="flex-element">
                 <SingleSkillDisplay :skillData="props.skillData" title="Huge Skill" type="quest" :lang="props.lang"/>
             </div>
-            <div class="flex-element-main">
+            <div class="flex-element">
                 <SingleSkillDisplay :skillData="props.skillData" title="Legion Skill" type="gvg" :lang="props.lang"/>
             </div>
-            <div class="flex-element-side">
+            <div class="flex-element">
                 <SingleSkillDisplay :skillData="props.skillData" title="Legion Support Skill" type="auto" :lang="props.lang"/>
             </div>
         </div>
@@ -150,13 +150,14 @@ const colDefs = computed(() => {
 <style scoped>
 .flex-container{
     display: flex;
-    flex-wrap: wrap
+    flex-wrap: nowrap;
+    flex-direction: row;
 }
 
 .flex-element{
-    margin: 2px;
-    flex-grow: 1;
-    width: 50rem;
+    flex: 1;
+    margin: 0 10px 0 10px;
+
 }
 
 @media (max-width: 1000px) {
