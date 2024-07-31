@@ -1,6 +1,6 @@
 <template>
     <div v-for="skill in skillsList">
-        <MemoriaSkillsDisplay :skillData="skill" :lang="language"/>
+        <MemoriaSkillsDisplay :skillData="skill" :lang="language" :schemeVal="schemeVal"/>
         <br/>
         <Divider/>
     </div>
@@ -8,12 +8,10 @@
 </template>
 
 <script setup>
-import Divider from 'primevue/divider';
-
     const route = useRoute()
     const uniqueId = route.params.unique_id
     const memoriaStore = useMemoriaStore()
-    const { allMemoria, language } = storeToRefs(memoriaStore)
+    const { language, schemeVal } = storeToRefs(memoriaStore)
     const nuxtApp = useNuxtApp()
     const { data: skillsList, refresh: refreshSkillData } = await useAsyncData('skillsList', () => getSkillsList())
 
@@ -27,7 +25,7 @@ import Divider from 'primevue/divider';
         var skillArr = []
         // If memoria list has been filled, get data from the list
         skillArr = memoriaStore.getMemoriaSkills(parseInt(uniqueId))
-        if (!skillArr || !skillArr[0][`${language.value}_name`])
+        if ((!skillArr && skillArr.length > 0) || !skillArr[0][`${language.value}_name`])
         {
             // Not filled, get the data from the API using unique_id
             skillArr = await nuxtApp.$fetchMsgpack('/api/memoria', {unique_id: uniqueId, lang: language.value})

@@ -37,7 +37,7 @@ import SingleSkillDisplay from './SingleSkillDisplay.vue';
 import RarityIcon from '~/components/RarityIcon.vue';
 import TableNameCell from '~/components/TableNameCell.vue';
 import TypeIcon from '~/components/TypeIcon.vue';
-const props = defineProps(['skillData', 'lang'])
+const props = defineProps(['skillData', 'lang', 'schemeVal'])
 const header = computed(() => props.skillData[`${props.lang}_name`])
 const autoSizeStrategy = {
         type: 'fitGridWidth',
@@ -66,7 +66,11 @@ const colDefs = computed(() => {
             headerName: 'Type',
             wrapText: true,
             cellRenderer: TypeIcon,
-            cellClass: 'centered-cell'
+            maxWidth: 70,
+            cellClass: 'centered-cell',
+            cellRendererParams: {
+                schemeVal: props.schemeVal
+            }
         },
         {
             field: `rarity`,
