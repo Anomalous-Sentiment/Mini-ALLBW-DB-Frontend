@@ -136,6 +136,7 @@
             wrapText: true,
             filter: false,
             maxWidth: 64,
+            minWidth: 64,
             cellClass: 'centered-img'
         },
         {
@@ -144,7 +145,8 @@
             wrapText: true,
             filter: 'agTextColumnFilter',
             cellRenderer: TableNameCell,
-            cellClass: 'centered-cell'
+            cellClass: 'centered-cell',
+            minWidth: 100,
         },
         {
             field: `card_type`,
@@ -152,7 +154,8 @@
             wrapText: true,
             cellRenderer: TypeIcon,
             maxWidth: 70,
-            cellClass: 'centered-cell',
+            minWidth: 38,
+            cellClass: 'centered-img',
             cellRendererParams: {
                 schemeVal: schemeVal.value
             }
@@ -163,7 +166,8 @@
             wrapText: true,
             cellRenderer: RarityIcon,
             maxWidth: 70,
-            cellClass: 'centered-cell'
+            minWidth: 38,
+            cellClass: 'centered-img'
         },
         {
             field: `attribute`,
@@ -171,7 +175,8 @@
             wrapText: true,
             cellRenderer: (params) => `<img src="img/icons/attribute_${params.value}.png" alt="Attribute Icon" class="image" width="32pc" height="32px">`,
             maxWidth: 70,
-            cellClass: 'centered-cell'
+            minWidth: 38,
+            cellClass: 'centered-img'
 
         },
         {
@@ -181,6 +186,7 @@
             cellDataType: 'number',
             filter: false,
             maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -190,6 +196,7 @@
             cellDataType: 'number',
             filter: false,
             maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -199,6 +206,7 @@
             cellDataType: 'number',
             filter: false,
             maxWidth: 70,
+            minWidth: 70,
             cellClass: 'centered-cell'
         },
         {
@@ -207,6 +215,7 @@
             wrapText: true,
             cellDataType: 'number',
             filter: false,
+            minWidth: 70,
             maxWidth: 70,
             cellClass: 'centered-cell'
         },
@@ -218,7 +227,7 @@
             filter: false,
             autoHeight: true,
             sortable: false,
-            minWidth: 250,
+            minWidth: 150,
             valueGetter: (p) => {
                 const newVal = {}
                 newVal[`name`] = p.data[`quest_${language.value}_name`]
@@ -235,6 +244,7 @@
             filter: false,
             autoHeight: true,
             sortable: false,
+            minWidth: 150,
             valueGetter: (p) => {
                 const newVal = {}
                 newVal[`name`] = p.data[`gvg_${language.value}_name`]
@@ -252,10 +262,11 @@
             filter: false,
             autoHeight: true,
             sortable: false,
+            minWidth: 150,
             valueGetter: (p) => {
                 const newVal = {}
-                newVal[`name`] = p.data[`gvg_${language.value}_name`]
-                newVal[`desc`] = p.data[`gvg_${language.value}_desc`]
+                newVal[`name`] = p.data[`auto_${language.value}_name`]
+                newVal[`desc`] = p.data[`auto_${language.value}_desc`]
                 newVal[`type`] = 'gvg'
                 return newVal
             }
