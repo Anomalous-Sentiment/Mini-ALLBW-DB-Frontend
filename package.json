@@ -3,27 +3,29 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "start": "node .output/server/index.mjs",
+    "build": "npx prisma generate && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.5.2",
+    "@primevue/nuxt-module": "^4.0.3",
     "@primevue/themes": "^4.0.1",
-    "@prisma/nuxt": "^0.0.30",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
     "ag-grid-vue3": "^32.0.2",
     "msgpackr": "^1.11.0",
+    "nuxt": "^3.12.4",
     "pinia": "^2.2.0",
     "primevue": "^4.0.1",
+    "shx": "^0.3.4",
     "vue": "latest"
   },
   "devDependencies": {
-    "@pinia/nuxt": "^0.5.2",
     "@prisma/client": "^5.17.0",
-    "@vueuse/core": "^10.11.0",
-    "@vueuse/nuxt": "^10.11.0",
-    "nuxt": "^3.12.4",
     "prisma": "^5.17.0"
   }
 }

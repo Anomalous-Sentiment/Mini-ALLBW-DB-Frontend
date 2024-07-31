@@ -3,11 +3,11 @@
     DISTINCT ON (u_mem.unique_id) u_mem.unique_id,
     mem.card_mst_id,
     mem.rarity,
-    mem.awakened_card_type AS card_type,
+    mem.card_type,
     mem.attribute,
-    mem.quest_skill_mst_id,
-    mem.gvg_skill_mst_id,
-    mem.gvg_auto_skill_mst_id,
+    mem.awaken_quest_skill_mst_id AS quest_skill_mst_id,
+    mem.awaken_gvg_skill_mst_id AS gvg_skill_mst_id,
+    mem.awaken_gvg_auto_skill_mst_id AS gvg_auto_skill_mst_id,
     (mem.max_phys_atk + mem.awaken_add_phys_atk) AS max_phys_atk,
     (mem.max_phys_def + mem.awaken_add_phys_def) AS max_phys_def,
     (mem.max_mag_atk + mem.awaken_add_mag_atk) AS max_mag_atk,
@@ -27,7 +27,7 @@
     mem.card_mst_id
 )
 UNION
-(
+ALL (
   SELECT
     DISTINCT ON (u_mem.unique_id) u_mem.unique_id,
     mem.card_mst_id,

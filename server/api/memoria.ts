@@ -1,5 +1,5 @@
-import Unique_id from "~/pages/card/[unique_id].vue";
 import { usePacker } from "../utils/msgpacker";
+import prisma from '~/lib/prisma'
 
 export default defineEventHandler<{ query: { lang: string, unique_id: string } }>(async (event) => {
   const query = getQuery(event)
@@ -89,7 +89,6 @@ export default defineEventHandler<{ query: { lang: string, unique_id: string } }
       }
     }
   }
-
 
   const memoria = await prisma.combined_memoria_list.findMany(
     {

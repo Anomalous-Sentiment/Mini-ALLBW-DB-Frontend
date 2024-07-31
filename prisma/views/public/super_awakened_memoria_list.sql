@@ -2,7 +2,7 @@ SELECT
   u_mem.unique_id,
   mem.card_mst_id,
   mem.rarity,
-  mem.awakened_card_type AS card_type,
+  awk_mem.card_type,
   mem.attribute,
   awk_mem.quest_skill_mst_id,
   awk_mem.gvg_skill_mst_id,

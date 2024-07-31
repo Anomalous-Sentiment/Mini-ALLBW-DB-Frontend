@@ -115,6 +115,7 @@ FROM
             FROM
               evolved_memoria_list evo_mem
             UNION
+            ALL
             SELECT
               awk_mem.unique_id,
               awk_mem.card_mst_id,
@@ -133,6 +134,7 @@ FROM
             FROM
               awakened_memoria_list awk_mem
             UNION
+            ALL
             SELECT
               super_mem.unique_id,
               super_mem.card_mst_id,

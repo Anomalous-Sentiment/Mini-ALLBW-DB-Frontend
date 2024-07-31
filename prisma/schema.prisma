@@ -293,7 +293,7 @@ view super_awakened_memoria_list {
   unique_id             Int?
   card_mst_id           Int?
   rarity                Int?     @db.SmallInt
-  card_type             Int?
+  card_type             Int?     @db.SmallInt
   attribute             Int?     @db.SmallInt
   quest_skill_mst_id    Int?
   gvg_skill_mst_id      Int?
