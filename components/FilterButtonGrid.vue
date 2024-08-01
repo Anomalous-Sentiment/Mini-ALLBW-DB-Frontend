@@ -4,7 +4,12 @@
     </h3>
     <div class="grid">
         <div class="item" v-for="filter in props.filters">
-            <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
+            <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']">
+                <template #icon>
+                    <img v-if="filter['value']" :src="`/img/icons/${filter['key'] + '_' + filter['value']}.png`" alt="Role Icon" width="32px" height="32px" loading="lazy" style="margin-right: 10px">
+                </template>
+
+            </ToggleButton>
         </div>
     </div>
 </template>
