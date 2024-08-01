@@ -1,5 +1,84 @@
 // Using the option API
 
+const generalSkills : Array<Object> = [
+  {
+    'name': 'Sp. Atk UP',
+    'key': 'buffer_magical_attack_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Sp. Def UP',
+    'key': 'buffer_magical_defense_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Reg. Atk UP',
+    'key': 'buffer_physical_attack_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Reg. Def UP',
+    'key': 'buffer_physical_defense_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Sp. Atk DOWN',
+    'key': 'debuffer_magical_attack_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Sp. Def DOWN',
+    'key': 'debuffer_magical_defense_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Reg. Atk DOWN',
+    'key': 'debuffer_physical_attack_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Reg. Def DOWN',
+    'key': 'debuffer_physical_defense_magnification',
+    'applied': false,
+  },
+]
+
+const supportSkills : Array<Object> = generalSkills.concat([
+  {
+    'name': 'Damage UP',
+    'key': 'attack_up_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Healing UP',
+    'key': 'recovery_up_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Support UP',
+    'key': 'buffer_up_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'MP DOWN',
+    'key': 'use_sp_reduce_magnification',
+    'applied': false,
+  },
+])
+
+const mainSkills : Array<Object> = generalSkills.concat([
+  {
+    'name': 'Damage',
+    'key': 'attack_magnification',
+    'applied': false,
+  },
+  {
+    'name': 'Healing',
+    'key': 'recovery_magnification',
+    'applied': false,
+  },
+])
+
 export const useMemoriaStore = defineStore('memoriaStore', {
     state: () => ({
       schemeVal: 0,
@@ -7,56 +86,21 @@ export const useMemoriaStore = defineStore('memoriaStore', {
       memoria: [],
       language: 'en',
       textFilter: '',
-      toggleableFilters: [
-        {
-          'name': 'Damage UP',
-          'key': 'attack_magnification',
-        },
-        {
-          'name': 'Sp. Atk UP',
-          'key': 'buffer_magical_attack_magnification',
-        },
-        {
-          'name': 'Sp. Def UP',
-          'key': 'buffer_magical_defense_magnification',
-        },
-        {
-          'name': 'Reg. Atk UP',
-          'key': 'buffer_physical_attack_magnification',
-        },
-        {
-          'name': 'Reg. Def UP',
-          'key': 'buffer_physical_defense_magnification',
-        },
-        {
-          'name': 'Sp. Atk DOWN',
-          'key': 'debuffer_magical_attack_magnification',
-        },
-        {
-          'name': 'Sp. Def DOWN',
-          'key': 'debuffer_magical_defense_magnification',
-        },
-        {
-          'name': 'Reg. Atk DOWN',
-          'key': 'debuffer_physical_attack_magnification',
-        },
-        {
-          'name': 'Reg. Def DOWN',
-          'key': 'debuffer_physical_defense_magnification',
-        },
-        {
-          'name': 'Healing UP',
-          'key': 'recovery_magnification',
-        },
-        {
-          'name': 'Support UP',
-          'key': 'buffer_up_magnification',
-        },
-        {
-          'name': 'MP DOWN',
-          'key': 'use_sp_reduce_magnification',
-        },
-      ],
+      questSkillFilters: mainSkills.map(obj => {
+        const newObj = Object.assign({}, obj)
+        newObj['key'] = 'quest_' + obj['key']
+        return newObj
+      }),
+      gvgSkillFilters: mainSkills.map(obj => {
+        const newObj = Object.assign({}, obj)
+        newObj['key'] = 'gvg_' + obj['key']
+        return newObj
+      }),
+      autoSkillFilters: supportSkills.map(obj => {
+        const newObj = Object.assign({}, obj)
+        newObj['key'] = 'auto_' + obj['key']
+        return newObj
+      }),
     }),
     actions: {
       async fetch() 
@@ -81,10 +125,19 @@ export const useMemoriaStore = defineStore('memoriaStore', {
             $event("language:changed")
         }
       },
-      async applyFilters(filters: Array<Object> = []) 
+      resetFilters()
+      {
+        this.questSkillFilters.forEach(obj => obj['applied'] = false)
+        this.gvgSkillFilters.forEach(obj => obj['applied'] = false)
+        this.autoSkillFilters.forEach(obj => obj['applied'] = false)
+      },
+      async applyFilters() 
       {
         var startTime = performance.now()
         var tempList = []
+        // Get all filters to apply
+        const filters = this.questSkillFilters.concat(this.gvgSkillFilters).concat(this.autoSkillFilters).filter(filterObj => filterObj['applied'])
+        console.log(filters)
         // Create an array of filter functions
         const filterFunctions : Array<Function> = filters.map((filtObj : any) => {
           // Convert filter objects to functions
