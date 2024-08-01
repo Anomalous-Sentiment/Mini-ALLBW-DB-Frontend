@@ -86,6 +86,70 @@ export const useMemoriaStore = defineStore('memoriaStore', {
       memoria: [],
       language: 'en',
       textFilter: '',
+      typeFilters: [
+        {
+          'name': 'R. Unit Atk',
+          'key': 'card_type',
+          'value': 1,
+          'applied': false,
+        },
+        {
+          'name': 'R. Ranged Atk',
+          'key': 'card_type',
+          'value': 2,
+          'applied': false,
+        },
+        {
+          'name': 'Sp. Unit Atk',
+          'key': 'card_type',
+          'value': 3,
+          'applied': false,
+        },
+        {
+          'name': 'Sp. Ranged Atk',
+          'key': 'card_type',
+          'value': 4,
+          'applied': false,
+        },
+        {
+          'name': 'Assistance',
+          'key': 'card_type',
+          'value': 5,
+          'applied': false,
+        },
+        {
+          'name': 'Obstruction',
+          'key': 'card_type',
+          'value': 6,
+          'applied': false,
+        },
+        {
+          'name': 'Healing',
+          'key': 'card_type',
+          'value': 7,
+          'applied': false,
+        },
+      ],
+      attributeFilters: [
+        {
+          'name': 'Fire',
+          'key': 'attribute',
+          'value': 1,
+          'applied': false,
+        },
+        {
+          'name': 'Water',
+          'key': 'attribute',
+          'value': 2,
+          'applied': false,
+        },
+        {
+          'name': 'Wind',
+          'key': 'attribute',
+          'value': 3,
+          'applied': false,
+        },
+      ],
       questSkillFilters: mainSkills.map(obj => {
         const newObj = Object.assign({}, obj)
         newObj['key'] = 'quest_' + obj['key']
@@ -127,6 +191,8 @@ export const useMemoriaStore = defineStore('memoriaStore', {
       },
       resetFilters()
       {
+        this.typeFilters.forEach(obj => obj['applied'] = false)
+        this.attributeFilters.forEach(obj => obj['applied'] = false)
         this.questSkillFilters.forEach(obj => obj['applied'] = false)
         this.gvgSkillFilters.forEach(obj => obj['applied'] = false)
         this.autoSkillFilters.forEach(obj => obj['applied'] = false)
@@ -135,20 +201,32 @@ export const useMemoriaStore = defineStore('memoriaStore', {
       {
         var startTime = performance.now()
         var tempList = []
-        // Get all filters to apply
+        // Get all skill filters to apply
         const filters = this.questSkillFilters.concat(this.gvgSkillFilters).concat(this.autoSkillFilters).filter(filterObj => filterObj['applied'])
-        console.log(filters)
-        // Create an array of filter functions
+
+        // Get all card type and attribute filters to apply
+        const cardAttrFilters = this.typeFilters.concat(this.attributeFilters).filter(filterObj => filterObj['applied'])
+
+        // Create an array of filter functions for skill effects
         const filterFunctions : Array<Function> = filters.map((filtObj : any) => {
           // Convert filter objects to functions
           // Checks if the value of filter key in obj is greater than 0 (i.e. exists)
-          return (obj) => obj[filtObj['key']] && obj[filtObj['key']] > 0 ? true : false
+          return (obj) => obj[filtObj['key']] > 0 ? true : false
         })
+
+        // Create filter functions for card types and attributes
+        const equalityFilters : Array<Function> = cardAttrFilters.map((filtObj : any) => {
+          // Convert filter objects to functions
+          // Checks if the value of filter key in obj is greater than 0 (i.e. exists)
+          return (obj) => obj[filtObj['key']] == filtObj['value'] ? true : false
+        })
+
+        const combinedFilterFunctions = filterFunctions.concat(equalityFilters)
 
         // Iterate through memoria list, running each element against filter functions and assign filtered results
         tempList = this.allMemoria.filter((element : Record<string, Object>) => {
           // Only return true if all filters return true for the current element (i.e. pass the check) also check if it passes the name filter
-          return filterFunctions.every((func) => func(element))
+          return combinedFilterFunctions.every((func) => func(element))
         })
 
         this.memoria = tempList.filter((element) => element[`${this.language}_name`].toLowerCase().includes(this.textFilter.toLowerCase()))

@@ -2,32 +2,13 @@
     <div class="ag-theme-quartz-dark">
         <Message severity="warn">Data may or may not be accurate. Take it with a grain of salt and use at your own risk</Message>
         <Button label="Filter" @click="showFilterDialog = true" />
-        <Dialog v-model:visible="showFilterDialog" modal header="Skill Effect Filters" :style="{ width: '30%' }">
+        <Dialog v-model:visible="showFilterDialog" modal header="Skill Effect Filters" :style="{ width: '50%' }">
         <div>
-            <h3>
-                Huge Skills
-            </h3>
-            <div class="grid">
-                <div class="item" v-for="filter in questSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
-                </div>
-            </div>
-            <h3>
-                Legion Skills
-            </h3>
-            <div class="grid">
-                <div class="item" v-for="filter in gvgSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
-                </div>
-            </div>
-            <h3>
-                Legion Support Skills
-            </h3>
-            <div class="grid">
-                <div class="item" v-for="filter in autoSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
-                </div>
-            </div>
+            <FilterButtonGrid :filters="typeFilters" header="Types"/>
+            <FilterButtonGrid :filters="attributeFilters" header="Attributes"/>
+            <FilterButtonGrid :filters="questSkillFilters" header="Huge Skills"/>
+            <FilterButtonGrid :filters="gvgSkillFilters" header="Legion Skills"/>
+            <FilterButtonGrid :filters="autoSkillFilters" header="Legion Support Skills"/>
             <span class="dialogue-footer">
                     <Button type="button" label="Reset" severity="secondary" @click="memoriaStore.resetFilters"></Button>
                     <Button type="button" label="Save" @click="memoriaStore.applyFilters"></Button>
@@ -153,7 +134,7 @@
     import TypeIcon from '~/components/TypeIcon.vue';
     const showFilterDialog = ref(false)
     const memoriaStore = useMemoriaStore()
-    const { memoria, language, textFilter, schemeVal, questSkillFilters, gvgSkillFilters, autoSkillFilters } = storeToRefs(memoriaStore)
+    const { memoria, language, textFilter, schemeVal, questSkillFilters, gvgSkillFilters, autoSkillFilters, typeFilters, attributeFilters } = storeToRefs(memoriaStore)
     const nf = new Intl.NumberFormat();
     const { $listen } = useNuxtApp()
     const memoriaDataKey = 'memoria'
@@ -374,15 +355,6 @@
     margin: 0rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-}
-
-.item {
-margin: auto;
-padding: 5px;
-}
 .filter-on {
     background-color: yellow;
 }
