@@ -2,7 +2,7 @@
     <div class="ag-theme-quartz-dark">
         <Message severity="warn">Data may or may not be accurate. Take it with a grain of salt and use at your own risk</Message>
         <Button label="Filter" @click="showFilterDialog = true" />
-        <Dialog v-model:visible="showFilterDialog" modal header="Skill Effect Filters" :style="{ width: '50%' }">
+        <Dialog v-model:visible="showFilterDialog" modal header="Skill Effect Filters" :style="{ width: '50rem' }">
         <div>
             <FilterButtonGrid :filters="typeFilters" header="Types"/>
             <FilterButtonGrid :filters="attributeFilters" header="Attributes"/>
