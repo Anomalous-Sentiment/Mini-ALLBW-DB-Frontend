@@ -149,6 +149,18 @@ export const useMemoriaStore = defineStore('memoriaStore', {
           'value': 3,
           'applied': false,
         },
+        {
+          'name': 'Light',
+          'key': 'attribute',
+          'value': 4,
+          'applied': false,
+        },
+        {
+          'name': 'Dark',
+          'key': 'attribute',
+          'value': 5,
+          'applied': false,
+        },
       ],
       questSkillFilters: mainSkills.map(obj => {
         const newObj = Object.assign({}, obj)
