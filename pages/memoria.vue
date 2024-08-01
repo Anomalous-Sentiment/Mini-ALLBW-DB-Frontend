@@ -9,7 +9,7 @@
             </h3>
             <div class="grid">
                 <div class="item" v-for="filter in questSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name'] + ' Off'" onIcon="filter-on"/>
+                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
                 </div>
             </div>
             <h3>
@@ -17,7 +17,7 @@
             </h3>
             <div class="grid">
                 <div class="item" v-for="filter in gvgSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name'] + ' Off'" onIcon="filter-on"/>
+                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
                 </div>
             </div>
             <h3>
@@ -25,10 +25,10 @@
             </h3>
             <div class="grid">
                 <div class="item" v-for="filter in autoSkillFilters">
-                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name'] + ' Off'" onIcon="filter-on"/>
+                    <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']" onIcon="filter-on"/>
                 </div>
             </div>
-            <span>
+            <span class="dialogue-footer">
                     <Button type="button" label="Reset" severity="secondary" @click="memoriaStore.resetFilters"></Button>
                     <Button type="button" label="Save" @click="memoriaStore.applyFilters"></Button>
             </span>
@@ -385,5 +385,15 @@ padding: 5px;
 }
 .filter-on {
     background-color: yellow;
+}
+
+:deep(.p-togglebutton-content) {
+    gap: 0;
+}
+
+.dialogue-footer {
+    margin-left: auto; 
+    margin-right: 0;
+    float: right;
 }
 </style>
