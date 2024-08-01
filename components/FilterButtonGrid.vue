@@ -6,7 +6,8 @@
         <div class="item" v-for="filter in props.filters">
             <ToggleButton v-model="filter['applied']" :onLabel="filter['name']" :offLabel="filter['name']">
                 <template #icon>
-                    <img v-if="filter['value']" :src="`/img/icons/${filter['key'] + '_' + filter['value']}.png`" alt="Role Icon" width="32px" height="32px" loading="lazy" style="margin-right: 10px">
+                    <img v-if="filter['value'] && filter['key'] == 'card_type'" :src="`/img/icons/${filter['key'] + '_' + filter['value']}.png`" alt="Role Icon" width="32px" height="32px" loading="lazy" :style="{'margin-right': '10px', 'filter': 'invert(' + schemeVal + ')'}">
+                    <img v-else-if="filter['value']" :src="`/img/icons/${filter['key'] + '_' + filter['value']}.png`" alt="Role Icon" width="32px" height="32px" loading="lazy" :style="{'margin-right': '10px'}">
                 </template>
 
             </ToggleButton>
@@ -16,7 +17,8 @@
 
 <script setup>
 const props = defineProps(['header', 'filters'])
-
+const memoriaStore = useMemoriaStore()
+const { schemeVal } = storeToRefs(memoriaStore)
 </script>
 
 <style scoped>
@@ -30,9 +32,6 @@ margin: auto;
 padding: 5px;
 }
 
-.filter-on {
-    background-color: yellow;
-}
 :deep(.p-togglebutton-content) {
     gap: 0;
 }
