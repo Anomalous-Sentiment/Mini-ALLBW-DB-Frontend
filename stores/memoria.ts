@@ -196,6 +196,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         this.questSkillFilters.forEach(obj => obj['applied'] = false)
         this.gvgSkillFilters.forEach(obj => obj['applied'] = false)
         this.autoSkillFilters.forEach(obj => obj['applied'] = false)
+        this.applyFilters()
       },
       async applyFilters() 
       {
