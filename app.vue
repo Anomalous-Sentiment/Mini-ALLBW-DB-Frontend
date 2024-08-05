@@ -1,5 +1,5 @@
 <template>
-    <NuxtLayout name="desktop">
+    <NuxtLayout :name="$device.isDesktop ? 'desktop' : 'mobile'">
       <NuxtPage />
     </NuxtLayout>
   </template>
@@ -14,6 +14,7 @@ useSeoMeta({
   ogDescription: 'A small database frontend for the game Assault Lily Last Bullet W',
   twitterCard: 'summary_large_image',
 })
+
 </script>
 
 <style>

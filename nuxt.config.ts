@@ -59,7 +59,7 @@ export default defineNuxtConfig({
     '@primevue/nuxt-module',
     "@pinia/nuxt",
     '@vueuse/nuxt',
-
+    '@nuxtjs/device',
   ],
   primevue: {
     options: {
