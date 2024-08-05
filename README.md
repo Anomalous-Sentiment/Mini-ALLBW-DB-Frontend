@@ -1,6 +1,11 @@
-# Nuxt 3 Minimal Starter
+# Mini ALLBW DB Frontend
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+This is frontend of the Mini ALLBW DB project which displays data obtained from the Assault Lily Last Bullet W
+APK file, as well as data obtained from the game APIs.
+
+An existing database filled with the required data is required to use this.
+
+For information on setting up a database and obtaining the required data, refer to the [Mini ALLBW DB project](https://github.com/Anomalous-Sentiment/Mini-ALLBW-DB)
 
 ## Setup
 
@@ -9,16 +14,9 @@ Make sure to install the dependencies:
 ```bash
 # npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
+
+Create a `.env` file to store environment variables. Refer to the `example.env` file for the required environment variables for the project and complete as needed.
 
 ## Development Server
 
@@ -27,49 +25,15 @@ Start the development server on `http://localhost:3000`:
 ```bash
 # npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
 ## Production
 
-Build the application for production:
+Build and run the application for production:
 
 ```bash
 # npm
 npm run build
 
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run start
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
