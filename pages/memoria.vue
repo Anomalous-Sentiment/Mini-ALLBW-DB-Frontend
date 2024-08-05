@@ -23,7 +23,6 @@
         style="height: 67vh"
         class="ag-theme-quartz-dark"
         pagination="true"
-        :defaultColDef="defaultColDef"
         :autoSizeStrategy="autoSizeStrategy"
         >
         </ag-grid-vue>
@@ -158,9 +157,13 @@
             headerName: 'Name',
             wrapText: true,
             filter: 'agTextColumnFilter',
+            floatingFilter: true,
             cellRenderer: TableNameCell,
             cellClass: 'centered-cell',
             minWidth: 100,
+            filterParams: {
+                filterPlaceholder: 'Search by name...'
+            },
         },
         {
             field: `card_type`,
@@ -169,6 +172,7 @@
             cellRenderer: TypeIcon,
             maxWidth: 70,
             minWidth: 38,
+            filter: false,
             cellClass: 'centered-img',
             cellRendererParams: {
                 schemeVal: schemeVal.value
@@ -181,6 +185,7 @@
             cellRenderer: RarityIcon,
             maxWidth: 70,
             minWidth: 38,
+            filter: false,
             cellClass: 'centered-img'
         },
         {
@@ -190,6 +195,7 @@
             cellRenderer: (params) => `<img src="img/icons/attribute_${params.value}.png" alt="Attribute Icon" class="image" width="32pc" height="32px">`,
             maxWidth: 70,
             minWidth: 38,
+            filter: false,
             cellClass: 'centered-img'
 
         },
@@ -298,10 +304,7 @@
 
     return defaultColumns
 })
-    const defaultColDef = ref({
-      filter: "agTextColumnFilter",
-      floatingFilter: true,
-    });
+
     const debouncedSearch = useDebounceFn(async() => {
         await memoriaStore.applyFilters()
     }, 500)
@@ -377,5 +380,10 @@
     margin-left: auto; 
     margin-right: 0;
     float: right;
+}
+
+:deep(input[class^=ag-]) {
+    background: var(--p-inputtext-background);
+    border: 1px solid var(--p-inputtext-border-color);
 }
 </style>
