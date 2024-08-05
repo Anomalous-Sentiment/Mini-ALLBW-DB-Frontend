@@ -112,7 +112,6 @@ h1 {
 }
 
 .footer {
-    min-height: 160px;
     text-align: center;
 }
 
