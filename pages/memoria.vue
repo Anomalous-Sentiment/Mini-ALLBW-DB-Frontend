@@ -142,7 +142,7 @@
         type: 'fitGridWidth',
     };
     const colDefs = computed(() => {
-        return [
+        var defaultColumns = [
         {
             field: 'unique_id',
             headerName: 'Icon',
@@ -193,6 +193,8 @@
             cellClass: 'centered-img'
 
         },
+    ]
+    const extraColumns = [
         {
             field: `max_phys_atk`,
             headerName: 'R. Atk',
@@ -287,7 +289,15 @@
 
         },
         
-    ]})
+    ]
+    const { isMobile } = useDevice();
+    if (!isMobile)
+    {
+        defaultColumns = defaultColumns.concat(extraColumns)
+    }
+
+    return defaultColumns
+})
     const defaultColDef = ref({
       filter: "agTextColumnFilter",
       floatingFilter: true,
