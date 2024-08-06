@@ -222,6 +222,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         this.questSkillFilters.forEach(obj => obj['applied'] = false)
         this.gvgSkillFilters.forEach(obj => obj['applied'] = false)
         this.autoSkillFilters.forEach(obj => obj['applied'] = false)
+        this.awakenedFilters.forEach(obj => obj['applied'] = false)
         this.applyFilters()
       },
       async applyFilters() 
@@ -233,6 +234,8 @@ export const useMemoriaStore = defineStore('memoriaStore', {
 
         // Get all card type and attribute filters to apply
         const cardAttrFilters = this.typeFilters.concat(this.attributeFilters).filter(filterObj => filterObj['applied'])
+
+        const appliedAwakenFilters = this.awakenedFilters.filter(obj => obj['applied'] == true)
 
         // Create an array of filter functions for skill effects
         const filterFunctions : Array<Function> = filters.map((filtObj : any) => {
@@ -248,7 +251,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
           return (obj) => obj[filtObj['key']] == filtObj['value'] ? true : false
         })
 
-        const awakenFilters : Array<Function> = this.awakenedFilters.map((filtObj : any) => {
+        const awakenFilters : Array<Function> = appliedAwakenFilters.map((filtObj : any) => {
           // Convert filter objects to functions
           // Checks if the value of filter key in obj is greater than 0 (i.e. exists)
           return (obj) => obj[filtObj['key']] == filtObj['value'] ? true : false
