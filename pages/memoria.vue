@@ -9,6 +9,7 @@
             <FilterButtonGrid :filters="questSkillFilters" header="Huge Skills"/>
             <FilterButtonGrid :filters="gvgSkillFilters" header="Legion Skills"/>
             <FilterButtonGrid :filters="autoSkillFilters" header="Legion Support Skills"/>
+            <FilterButtonGrid :filters="awakenedFilters" header="Awakened Status"/>
             <span class="dialogue-footer">
                     <Button type="button" label="Reset" severity="secondary" @click="memoriaStore.resetFilters"></Button>
                     <Button type="button" label="Save" @click="memoriaStore.applyFilters"></Button>
@@ -133,7 +134,7 @@
     import TypeIcon from '~/components/TypeIcon.vue';
     const showFilterDialog = ref(false)
     const memoriaStore = useMemoriaStore()
-    const { memoria, language, textFilter, schemeVal, questSkillFilters, gvgSkillFilters, autoSkillFilters, typeFilters, attributeFilters } = storeToRefs(memoriaStore)
+    const { memoria, language, textFilter, schemeVal, questSkillFilters, gvgSkillFilters, autoSkillFilters, typeFilters, attributeFilters, awakenedFilters } = storeToRefs(memoriaStore)
     const nf = new Intl.NumberFormat();
     const { $listen } = useNuxtApp()
     const memoriaDataKey = 'memoria'

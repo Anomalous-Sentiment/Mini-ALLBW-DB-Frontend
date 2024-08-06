@@ -177,6 +177,20 @@ export const useMemoriaStore = defineStore('memoriaStore', {
         newObj['key'] = 'auto_' + obj['key']
         return newObj
       }),
+      awakenedFilters: [
+        {
+          'name': 'Awakened',
+          'key': 'awakened',
+          'value': true,
+          'applied': false,
+        },
+        {
+          'name': 'Super Awakened',
+          'key': 'super_awakened',
+          'value': true,
+          'applied': false,
+        },
+      ]
     }),
     actions: {
       async fetch() 
@@ -234,7 +248,13 @@ export const useMemoriaStore = defineStore('memoriaStore', {
           return (obj) => obj[filtObj['key']] == filtObj['value'] ? true : false
         })
 
-        const combinedFilterFunctions = filterFunctions.concat(equalityFilters)
+        const awakenFilters : Array<Function> = this.awakenedFilters.map((filtObj : any) => {
+          // Convert filter objects to functions
+          // Checks if the value of filter key in obj is greater than 0 (i.e. exists)
+          return (obj) => obj[filtObj['key']] == filtObj['value'] ? true : false
+        })
+
+        const combinedFilterFunctions = filterFunctions.concat(equalityFilters).concat(awakenFilters)
 
         // Iterate through memoria list, running each element against filter functions and assign filtered results
         tempList = this.allMemoria.filter((element : Record<string, Object>) => {
@@ -242,6 +262,7 @@ export const useMemoriaStore = defineStore('memoriaStore', {
           return combinedFilterFunctions.every((func) => func(element))
         })
 
+        // Apply text search filter at last step
         this.memoria = tempList.filter((element) => element[`${this.language}_name`].toLowerCase().includes(this.textFilter.toLowerCase()))
 
 
