@@ -1,5 +1,5 @@
 SELECT
-  u_mem.unique_id,
+  DISTINCT ON (u_mem.unique_id, awk_mem.card_type) u_mem.unique_id,
   mem.card_mst_id,
   mem.rarity,
   awk_mem.card_type,
@@ -11,7 +11,7 @@ SELECT
   (mem.max_phys_def + awk_mem.max_phys_def) AS max_phys_def,
   (mem.max_mag_atk + awk_mem.max_mag_atk) AS max_mag_atk,
   (mem.max_mag_def + awk_mem.max_mag_def) AS max_mag_def,
-  TRUE AS awakened,
+  false AS awakened,
   TRUE AS super_awakened
 FROM
   (
@@ -20,4 +20,9 @@ FROM
       JOIN unique_memoria u_mem ON ((mem.unique_id = u_mem.unique_id))
     )
     JOIN super_awakened_memoria awk_mem ON ((awk_mem.card_mst_id = mem.card_mst_id))
-  );
+  )
+ORDER BY
+  u_mem.unique_id,
+  awk_mem.card_type,
+  mem.rarity DESC,
+  mem.card_mst_id;

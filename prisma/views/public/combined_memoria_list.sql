@@ -63,6 +63,7 @@ SELECT
   quest_sk.recovery_up_magnification AS quest_recovery_up_magnification,
   quest_sk.buffer_up_magnification AS quest_buffer_up_magnification,
   quest_sk.use_sp_reduce_magnification AS quest_use_sp_reduce_magnification,
+  quest_sk.json_params AS quest_json_params,
   gvg_sk.attack_magnification AS gvg_attack_magnification,
   gvg_sk.recovery_magnification AS gvg_recovery_magnification,
   gvg_sk.buffer_magical_attack_magnification AS gvg_buffer_magical_attack_magnification,
@@ -77,6 +78,7 @@ SELECT
   gvg_sk.recovery_up_magnification AS gvg_recovery_up_magnification,
   gvg_sk.buffer_up_magnification AS gvg_buffer_up_magnification,
   gvg_sk.use_sp_reduce_magnification AS gvg_use_sp_reduce_magnification,
+  gvg_sk.json_params AS gvg_json_params,
   auto_sk.attack_magnification AS auto_attack_magnification,
   auto_sk.recovery_magnification AS auto_recovery_magnification,
   auto_sk.buffer_magical_attack_magnification AS auto_buffer_magical_attack_magnification,
@@ -90,7 +92,8 @@ SELECT
   auto_sk.attack_up_magnification AS auto_attack_up_magnification,
   auto_sk.recovery_up_magnification AS auto_recovery_up_magnification,
   auto_sk.buffer_up_magnification AS auto_buffer_up_magnification,
-  auto_sk.use_sp_reduce_magnification AS auto_use_sp_reduce_magnification
+  auto_sk.use_sp_reduce_magnification AS auto_use_sp_reduce_magnification,
+  auto_sk.json_params AS auto_json_params
 FROM
   (
     (

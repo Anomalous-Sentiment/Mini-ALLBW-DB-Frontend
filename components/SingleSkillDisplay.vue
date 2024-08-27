@@ -24,14 +24,14 @@
                 {{ index + 1 }}
             </template>
         </Column>
-        <Column field="key" header="Parameter">
+        <Column field="0" header="Parameter">
             <template #body="{ data, index }">
-                {{ data['key'] }}
+                {{ data['0'] }}
             </template>
         </Column>
-        <Column field="value" header="Value">
+        <Column field="1" header="Value">
             <template #body="{ data, index }">
-                {{ data['value'] }}
+                {{ data['1'] }}
             </template>
         </Column>
     </DataTable>
@@ -39,29 +39,39 @@
 
 <script setup>
 const props = defineProps(['skillData', 'type', 'lang', 'title'])
-const skillParamArray = computed(() => processData(props.type, props.skillData))
+const skillParamArray = computed(() => getFlattenedParams(props.type, props.skillData))
 
-function processData(type, unprocessedData)
+
+// Utility function
+function flattenJSON(obj = {}, res = {}, extraKey = '')
 {
-    const output = []
-    if (unprocessedData)
-    {
-        Object.entries(unprocessedData).forEach(([key, value]) => {
-            // Check if key contains magnification as substring
-            if(key.includes('magnification') && key.includes(type))
-            {
-                // Check if value not null
-                if(value)
-                {
-                    // Add to output array
-                    output.push({key, value})
-                }
-            }
-        })
-    }
+   for(const key in obj){
+      if(typeof obj[key] !== 'object'){
+         res[extraKey + key] = obj[key];
+      }else{
+         flattenJSON(obj[key], res, `${extraKey}${key}.`);
+      };
+   };
+   return res;
+};
 
-    return output
+function getFlattenedParams(type, skillData)
+{
+    // Get the relevant json data (quest/gvg/auto)
+    const paramKey = `${type}_json_params`
+
+    // Flatten the json object
+    const output = flattenJSON(skillData[paramKey])
+
+    // Convert to an array
+    const paramArray = Object.entries(output).map(([key, value]) => {
+        return [key, value]
+    })
+
+    // Return as array for display
+    return paramArray
 }
+
 </script>
 
 <style scoped>

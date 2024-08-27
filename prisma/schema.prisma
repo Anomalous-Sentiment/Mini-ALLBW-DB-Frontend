@@ -86,6 +86,7 @@ model skills {
   buffer_up_magnification                 Float?  @db.Real
   recovery_up_magnification               Float?  @db.Real
   use_sp_reduce_magnification             Float?  @db.Real
+  json_params                             Json?
 }
 
 model unique_memoria {
@@ -172,7 +173,6 @@ view awakened_memoria_list {
   @@ignore
 }
 
-/// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
 view combined_memoria_list {
   row                                           BigInt   @id
   en_name                                       String?  @db.VarChar(100)
@@ -238,6 +238,7 @@ view combined_memoria_list {
   quest_recovery_up_magnification               Float?   @db.Real
   quest_buffer_up_magnification                 Float?   @db.Real
   quest_use_sp_reduce_magnification             Float?   @db.Real
+  quest_json_params                             Json?
   gvg_attack_magnification                      Float?   @db.Real
   gvg_recovery_magnification                    Float?   @db.Real
   gvg_buffer_magical_attack_magnification       Float?   @db.Real
@@ -252,6 +253,7 @@ view combined_memoria_list {
   gvg_recovery_up_magnification                 Float?   @db.Real
   gvg_buffer_up_magnification                   Float?   @db.Real
   gvg_use_sp_reduce_magnification               Float?   @db.Real
+  gvg_json_params                               Json?
   auto_attack_magnification                     Float?   @db.Real
   auto_recovery_magnification                   Float?   @db.Real
   auto_buffer_magical_attack_magnification      Float?   @db.Real
@@ -266,6 +268,7 @@ view combined_memoria_list {
   auto_recovery_up_magnification                Float?   @db.Real
   auto_buffer_up_magnification                  Float?   @db.Real
   auto_use_sp_reduce_magnification              Float?   @db.Real
+  auto_json_params                              Json?
 }
 
 /// The underlying view does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
